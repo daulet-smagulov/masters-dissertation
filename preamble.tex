@@ -165,6 +165,14 @@
     labelwidth=0.85cm,
     itemindent=\labelwidth]}
 {\end{itemize}}
+\newenvironment{where*}
+{\begin{itemize}[
+    label=\ifbool{firstitem}{{where}\global\boolfalse{firstitem}}{},
+    before=\booltrue{firstitem},
+    leftmargin=0pt,
+    labelwidth=1.5cm,
+    itemindent=\labelwidth]}
+{\end{itemize}}
 % \setlist[where]{label=\ifbool{firstitem}{\global\boolfalse{firstitem}}{},before=\booltrue{firstitem}}
 
 % Многострочный комментарий

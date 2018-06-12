@@ -17,22 +17,37 @@
 \setmainfont{XITS}
 \setmathfont{XITS Math}
 \usepackage[Symbol]{upgreek}
+\usepackage[hyphenation,lastparline]{impnattypo}
 
 % Оглавление и литература
 \newcommand{\myRefName}{Список использованных источников}
 \addto\captionsrussian{\renewcommand{\contentsname}{Оглавление}}
-% \addto\captionsrussian{\renewcommand{\refname}{\myRefName}}
 \usepackage[nottoc,notlot,notlof]{tocbibind}
 \usepackage{csquotes}
-\usepackage[style=numeric,giveninits=true,sorting=nyt]{biblatex}
+% \usepackage[backend=biber,style=gost-numeric,giveninits=true,sorting=nyt]{biblatex}
+% \usepackage[style=numeric,giveninits=true,sorting=nyt]{biblatex}
+\usepackage[style=numeric,giveninits=true,sorting=nyt,language=autobib,autolang=other]{biblatex}
+% \usepackage[%
+%     backend=biber,% движок
+%     bibencoding=utf8,% кодировка bib файла
+%     sorting=nyt,%none,% настройка сортировки списка литературы
+%     style=gost-numeric,% стиль цитирования и библиографии (по ГОСТ)
+%     language=autobib,% получение языка из babel/polyglossia, default: autobib % если ставить autocite или auto, то цитаты в тексте с указанием страницы, получат указание страницы на языке оригинала
+%     autolang=other,%other,% многоязычная библиография
+%     clearlang=true,% внутренний сброс поля language, если он совпадает с языком из babel/polyglossia
+%     defernumbers=true,% нумерация проставляется после двух компиляций, зато позволяет выцеплять библиографию по ключевым словам и нумеровать не из большего списка
+%     sortcites=true,% сортировать номера затекстовых ссылок при цитировании (если в квадратных скобках несколько ссылок, то отображаться будут отсортированно, а не абы как)
+%     doi=false,% Показывать или нет ссылки на DOI
+%     isbn=false,% Показывать или нет ISBN, ISSN, ISRN
+%     otherlangs=true,
+% ]{biblatex}[2016/09/17]
 \bibliography{references.bib}
 % \bibliographystyle{abbrv}
-% \usepackage[
-%     backend=biber, 
-%     sorting=nyt,
-%     bibstyle=gost-authoryear,
-%     citestyle=gost-authoryear
-% ]{biblatex}
+\usepackage[titles]{tocloft}
+\setlength\cftparskip{0pt}
+\setlength{\cftbeforesecskip}{3pt}
+\setlength{\cftbeforesubsecskip}{2pt}
+\setlength{\cftbeforesubsubsecskip}{0pt}
 
 % Абзац 15 мм
 \parindent=15mm
@@ -43,8 +58,6 @@
 % Секции по центру
 \usepackage{titlesec}
 \titleformat{\section}{\centering\normalfont\bfseries}{\thesection}{0.2cm}{}
-%\titleformat*{\section}{\centering\normalfont\large\bfseries}
-% \titleformat*{\subsection}{\normalfont\normalsize\bfseries}
 \titleformat{\subsection}[block]{\hspace{\parindent}\bfseries}{\thesubsection}{0.2cm}{}
 \titleformat{\subsubsection}[block]{\hspace{\parindent}\bfseries}{\thesubsubsection}{0.2cm}{}
 % Привязать заголовки к следующему абзацу
@@ -61,7 +74,6 @@
 \newcommand{\sectionbreak}{\clearpage}
 
 % Картинки
-\usepackage[labelsep=endash]{caption}
 \usepackage[final]{graphicx}
 \graphicspath{{images/}} % images folder
 % Вставить картинку
@@ -75,17 +87,14 @@
     \end{figure}
 }
 % example: \imgh{1.pdf}{width=0.93\textwidth}{Image}{img}
-\RequirePackage{caption}
-% \DeclareCaptionLabelSeparator{dot}{. }
-\captionsetup[figure]{justification=centering,labelsep=endash,name={Рисунок}}
-\captionsetup[table]{justification=raggedright,singlelinecheck=false,labelsep=endash}
+\usepackage[labelsep=endash,singlelinecheck=false]{caption}
+\captionsetup*[table]{justification=raggedright}
+\captionsetup*[figure]{justification=centering,name={Рисунок}}
 
 % Поля страницы
 \usepackage[left=3cm,right=1cm,top=2cm,bottom=2cm]{geometry}
 
 % Полуторный интервал
-% \linespread{1.3}
-% \renewcommand\baselinestretch{1.33}
 \usepackage{setspace}
 \newcommand\spread{1.3}
 \spacing{\spread}
@@ -173,7 +182,6 @@
     labelwidth=1.5cm,
     itemindent=\labelwidth]}
 {\end{itemize}}
-% \setlist[where]{label=\ifbool{firstitem}{\global\boolfalse{firstitem}}{},before=\booltrue{firstitem}}
 
 % Многострочный комментарий
 \usepackage{comment}
@@ -181,6 +189,7 @@
 % Устранить висячие строки
 \clubpenalty=10000
 \widowpenalty=10000
+\brokenpenalty=4991
 
 % Символы, в том числе "галочка"
 \usepackage{pifont}
@@ -194,10 +203,100 @@
 \usepackage{calc,array}
 \newcounter{MyCounter}
 \newcommand{\myItem}{\theMyCounter\stepcounter{MyCounter}}
+% Нумерация кириллицей
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
+\AddEnumerateCounter{\Asbuk}{\russian@Alph}{Щ}
+\makeatletter
+\def\russian@Alph#1{\ifcase#1\or
+  А\or Б\or В\or Г\or Д\or Е\or Ж\or
+  И\or К\or Л\or М\or Н\or
+  П\or Р\or С\or Т\or У\or Ф\or Х\or
+  Ц\or Ш\or Щ\or Э\or Ю\or Я\else\xpg@ill@value{#1}{russian@Alph}\fi}
+\def\russian@alph#1{\ifcase#1\or
+  а\or б\or в\or г\or д\or е\or ж\or
+  и\or к\or л\or м\or н\or
+  п\or р\or с\or т\or у\or ф\or х\or
+  ц\or ш\or щ\or э\or ю\or я\else\xpg@ill@value{#1}{russian@alph}\fi}
+\makeatother
+% Приложение
 \newcounter{Appendix}
 % \setcounter{Appendix}{1}
-\renewcommand{\theAppendix}{\Asbuk{Appendix}}
-\newcommand{\Appendix}{\refstepcounter{Appendix}\anonsection{Приложение \Asbuk{Appendix}}}
+\renewcommand{\theAppendix}{\Alph{Appendix}}
+\newcommand{\Appendix}{\refstepcounter{Appendix}\anonsection{Приложение \Alph{Appendix}}}
 
 % Поворот страницы
 \usepackage{lscape}
+
+% Сортировка списка литературы
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldsource=language, match=russian, final]
+      \step[fieldset=presort, fieldvalue={a}]
+    }
+    \map{
+      \step[fieldsource=language, notmatch=russian, final]
+      \step[fieldset=presort, fieldvalue={z}]
+    }
+  }
+}
+\def\cyrdash{\hbox to.8em{--\hss--}}
+\DefineBibliographyExtras{russian}{%
+  \protected\def\bibrangedash{\cyrdash}%
+    % \cyrdash\penalty\value{abbrvpenalty}}% almost unbreakable dash
+  \protected\def\bibdaterangesep{\bibrangedash}%тире для дат
+}
+\DefineBibliographyExtras{english}{%
+  \protected\def\bibrangedash{\cyrdash}%
+    % \cyrdash\penalty\value{abbrvpenalty}}% almost unbreakable dash
+  \protected\def\bibdaterangesep{\bibrangedash}%тире для дат
+}
+
+% Счётчики
+\usepackage[figure,table]{totalcount} 
+\usepackage{totcount,assoccnt}
+\usepackage{totpages}
+
+\newtotcounter{appendixNum}
+\DeclareAssociatedCounters{Appendix}{appendixNum}
+
+\AtBeginDocument{
+%% регистрируем счётчики в системе totcounter
+    \regtotcounter{totalcount@figure}
+    \regtotcounter{totalcount@table}
+    \regtotcounter{TotPages}
+    \regtotcounter{appendixNum}
+}
+
+\newtotcounter{citenum}
+\makeatletter
+\defbibenvironment{counter} %Env of bibliography
+  {\setcounter{citenum}{0}%
+  \renewcommand{\blx@driver}[1]{}%
+  } %what is doing at the beginining of bibliography. In your case it's : a. Reset counter b. Say to print nothing when a entry is tested.
+  {} %Здесь то, что будет выводиться командой \printbibliography. \thecitenum сюда писать не надо
+  {\stepcounter{citenum}} %What is printing / executed at each entry.
+\makeatother
+\defbibheading{counter}{}
+
+% Склонять существительное по числительному
+\makeatletter
+\def\formbytotal#1#2#3#4#5{%
+    \newcount\@c
+    \@c\totvalue{#1}\relax
+    \newcount\@last
+    \newcount\@pnul
+    \@last\@c\relax
+    \divide\@last 10
+    \@pnul\@last\relax
+    \divide\@pnul 10
+    \multiply\@pnul-10
+    \advance\@pnul\@last
+    \multiply\@last-10
+    \advance\@last\@c
+    \total{#1}~#2%
+    \ifnum\@pnul=1#5\else%
+    \ifcase\@last#5\or#3\or#4\or#4\or#4\else#5\fi
+    \fi
+}
+\makeatother

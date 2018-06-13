@@ -1,0 +1,134 @@
+% TPU Beamer Theme
+% by Daulet Smagulov
+%
+% Version 1.0
+% June 2018
+
+%%% Loading packages useful for typesetting our slides
+\usepackage{wrapfig}
+\usepackage{xcolor}
+\usepackage{etoolbox}
+\usepackage{hyperref} 
+% \usepackage{amsmath,amssymb,amsfonts,pxfonts}
+% \usepackage{unicode-math}
+\usepackage{icomma}
+
+\usepackage{cmap} % PDF search
+\usepackage{mathtext} % russian letters in formulae
+\usepackage[T2A]{fontenc} % encoding
+\usepackage[utf8]{inputenc} % source text encoding
+\usepackage[english,russian]{babel}
+
+\ProvidesPackage{beamerthemeTPU}[2018/06/05]
+
+\usefonttheme{default} % Font theme
+
+\definecolor{TPUblue}{cmyk}{1,0.5,0,0}
+\definecolor{TPUgreen}{cmyk}{0.6,0,1,0}
+\definecolor{TPUred}{cmyk}{0,0.85,1,0}
+\definecolor{TPUorange}{cmyk}{0,0.5,1,0}
+\setbeamercolor{WhiteOnGreen}{bg=TPUgreen,fg=white}
+\setbeamercolor{GreenOnWhite}{fg=TPUgreen,bg=white}
+
+\usepackage{hyperref}
+\hypersetup{
+    unicode=true,      % non-Latin characters in Acrobat’s bookmarks
+    % colorlinks=true,   % false: boxed links; true: colored links
+    % linkcolor=TPUblue,   % color of internal links (change box color with linkbordercolor)
+    citecolor=TPUgreen, % color of links to bibliography
+    filecolor=TPUgreen, % color of file links
+    urlcolor=TPUgreen   % color of external links
+}
+
+%%% Some design features
+\setbeamertemplate{navigation symbols}{}    % Comment out to show nav. bar
+\setbeamertemplate{itemize items}[circle]   % Style of bullet points, may be default, triangle, circle, square, or ball
+%\setbeamertemplate{theorems}[numbered]     % Number objects such as theorems and definitions
+
+
+%%% Set color of different objects (see Beamer User Guide for more info)
+\usecolortheme[named=TPUgreen]{structure}
+\setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{frametitle}{bg=TPUgreen}
+\setbeamercolor{frametitle}{fg=white}
+\setbeamercolor{headline}{bg=TPUgreen}
+\setbeamercolor{alerted text}{fg=TPUred}
+\setbeamercolor{itemize item}{fg=TPUgreen}
+\setbeamercolor{itemize subitem}{fg=TPUgreen}
+\setbeamercolor{itemize subsubitem}{fg=TPUgreen}
+\setbeamercolor{block title example}{fg=TPUblue}
+\AtBeginEnvironment{exampleblock}{
+    \setbeamercolor{itemize item}{fg=TPUblue}
+    \setbeamercolor{itemize subitem}{fg=TPUblue}
+    \setbeamercolor{itemize subsubitem}{fg=TPUblue}}
+\setbeamercolor{palette primary}{bg=TPUgreen}
+\setbeamercolor{palette primary}{fg=white}
+\setbeamercolor{palette secondary}{bg=TPUgreen}
+\setbeamercolor{palette secondary}{fg=white}
+\setbeamercolor{palette tertiary}{bg=TPUgreen}
+\setbeamercolor{palette tertiary}{fg=white}
+
+\setbeamerfont{title}{size=\Large}
+\setbeamerfont{institute}{size=\small}
+\setbeamerfont{date}{size=\small}
+
+%%% Layout issues
+\setbeamertemplate{headline}[default]{} % Empty headline
+\setbeamertemplate{frametitle} % Frametitle with logo
+{
+    \nointerlineskip
+    \begin{beamercolorbox}[sep=0.3cm,wd=\paperwidth]{frametitle}
+		\vbox{}\vskip-0.7ex% 
+		\begin{wrapfigure}{r}{0.25\textwidth}
+			\vskip-3ex
+			\colorbox{TPUgreen}{\includegraphics[width=0.2\textwidth]{TPU-theme/white_TPU_small.png}}
+ 		\end{wrapfigure}
+ 		\normalsize\strut\insertframetitle\\
+ 		\Large\strut\insertframesubtitle
+		\vskip-1ex%
+    \end{beamercolorbox}
+}
+
+% Title page
+\setbeamertemplate{title page}{
+  \begin{frame}
+    \centering
+    \includegraphics[height=0.2\paperheight]{TPU-theme/TPU_small.png}
+    \hspace{\fill}
+    \includegraphics[height=0.2\paperheight]{TPU-theme/map.png}\\
+    \hbox{%
+      \begin{beamercolorbox}[wd=\paperwidth,
+        ht=0.25\paperheight,%\headerheight,
+        center]{frametitle}
+          \vbox to 0.25\paperheight{
+          \vfil \usebeamerfont{title} \inserttitle \vfil}
+          % \usebeamerfont{title}\inserttitle
+      \end{beamercolorbox}}
+  %   \usebeamerfont{subtitle}\usebeamercolor[fg]{black}\insertsubtitle\par
+    \bigskip
+    \insertauthor\par
+    \vspace{2ex}
+    \insertinstitute\par
+    \insertdate\par
+  %   \usebeamercolor[fg]{titlegraphic}\inserttilegraphic
+  \end{frame}
+}
+
+\makeatletter
+\setbeamertemplate{footline} % Footline
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2ex,dp=1ex,center]{WhiteOnGreen}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2ex,dp=1ex,center]{WhiteOnGreen}%
+    \usebeamerfont{title in head/foot}\insertshortinstitute
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2ex,dp=1ex,right]{WhiteOnGreen}%
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\makeatother

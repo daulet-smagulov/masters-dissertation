@@ -1,0 +1,65 @@
+% Подписи к рисункам, таблицам
+\setbeamertemplate{caption}[numbered]
+\usepackage[labelsep=endash]{caption}
+\captionsetup[figure]{justification=centering,name={Рисунок}}
+\captionsetup[table]{justification=raggedright}
+
+% Изменить размеры заголовков
+\setbeamerfont{frametitle}{size=\Large}
+\setbeamerfont{framesubtitle}{size=\LARGE}
+
+% \mode<presentation>
+% {
+%   \usetheme{default}      % or try Darmstadt, Madrid, Warsaw, ...
+%   \usecolortheme{default} % or try albatross, beaver, crane, ...
+%   \usefonttheme{default}  % or try serif, structurebold, ...
+%   \setbeamertemplate{navigation symbols}{}
+%   \setbeamertemplate{caption}[numbered]
+% } 
+
+% Шрифт
+\usefonttheme{serif}
+
+% Рисунки
+% \usepackage[final]{graphicx}
+\graphicspath{{images/}}
+
+\bibliographystyle{apalike}
+
+% Списки
+% \usepackage{enumitem}
+% \setitemize{label=\usebeamerfont*{itemize item}
+%   \usebeamercolor[fg]{itemize item}
+%   \usebeamertemplate{itemize item}}
+% % Уравнение
+% \newbool{firstitem}
+% \newenvironment{where}
+% {\begin{itemize}[
+%     label=\ifbool{firstitem}{{где}\global\boolfalse{firstitem}}{},
+%     before=\booltrue{firstitem},
+%     leftmargin=0pt,
+%     itemindent=0.8cm,
+%     labelwidth=\itemindent,
+%     labelsep = 0pt,
+%     align=left]}
+% {\end{itemize}}
+
+% Алгоритм
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Вход:}}
+\renewcommand{\algorithmicensure}{\textbf{Выход:}}
+\floatname{algorithm}{Алгоритм}
+\newcounter{Algorithm}
+\setcounter{Algorithm}{1}
+
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\usepackage{adjustbox}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{bigstrut}
+\usepackage{color, colortbl}
+\usepackage{xcolor}

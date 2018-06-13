@@ -1,120 +1,527 @@
-\begingroup
-\singlespacing
-\centering
-\small
-\AtBeginEnvironment{tabularx}{\setstretch{1}}
-\AtBeginEnvironment{tabular}{\setstretch{1}}
-\AtBeginEnvironment{longtable}{\setstretch{1}}
-\renewcommand\tabularxcolumn[1]{p{#1}}
+\section*{Literature review}
 
-\vspace{\fill}
-\vspace{\fill}
-
-Раздел~\ref{section:literature}
-
-Обзор литературы
-
-\vspace{\fill}
-
-\begin{tabularx}{\textwidth}
-{|>{\hsize=0.64\hsize}Y|>{\hsize=2.08\hsize}Y|>{\hsize=0.64\hsize}Y|>{\hsize=0.64\hsize}Y|}
-    \multicolumn{4}{l}{Студент} \\
-    \hline
-    \scriptsize \textbf{Группа}
-        & \scriptsize \textbf{ФИО}
-        & \scriptsize \textbf{Подпись}
-        & \scriptsize \textbf{Дата} \\
-    \hline 
-    0ВМ61\bigstrut & Смагулов Даулет Серикбаевич & & \\ 
-    \hline
-\end{tabularx}
-
-\vspace{2ex}
-
-\begin{tabularx}{\textwidth}
-{|>{\hsize=1.8\hsize}Y|>{\hsize=1.1\hsize}Y|>{\hsize=0.7\hsize}Y|>{\hsize=0.7\hsize}Y|>{\hsize=0.7\hsize}Y|}
-    \multicolumn{5}{l}{Консультант школы отделения (НОЦ):} \\
-    \hline
-    \scriptsize \textbf{Должность} 
-        & \scriptsize \textbf{ФИО} 
-        & \scriptsize \textbf{Учёная степень, звание} 
-        & \scriptsize \textbf{Подпись} 
-        & \scriptsize \textbf{Дата} \\
-    \hline
-    & {}\bigstrut & & & \\ 
-    \hline
-\end{tabularx}
-
-\vspace{2ex}
-
-\begin{tabularx}{\textwidth}
-{|>{\hsize=1.8\hsize}Y|>{\hsize=1.1\hsize}Y|>{\hsize=0.7\hsize}Y|>{\hsize=0.7\hsize}Y|>{\hsize=0.7\hsize}Y|}
-    \multicolumn{5}{l}{Консультант-лингвист отделения (НОЦ):} \\
-    \hline
-    \scriptsize \textbf{Должность} 
-        & \scriptsize \textbf{ФИО} 
-        & \scriptsize \textbf{Учёная степень, звание} 
-        & \scriptsize \textbf{Подпись} 
-        & \scriptsize \textbf{Дата} \\
-    \hline
-    старший преподаватель отделения иностранных языков & Смирнова У. А.\bigstrut & старший преподаватель & & \\ 
-    \hline
-\end{tabularx}
-
-\vspace{\fill}
-
-\endgroup
-
-
-\anonsection{Literature review}
-
-Common measures of risk used in risk management are "value-at-risk" (\textit{VaR}) and "conditional-value-at-risk" (\textit{CVaR}) which can be determined for different levels of significance. 
-It is noted in the paper \cite{Kritski2007} that in the presence of a correlation of Profit \& Loss series of assets, one-dimensional risks' measures \textit{VaR} and \textit{CVaR} assess the portfolio risk incorrectly, see, e.g.,~\cite{Rachev2005}. 
-Therefore, to assess the portfolio risk, it is necessary to use $d$-dimensional measures determined through the multivariate dependence.
-
-There are many different approaches that actively used in applications to represent multivariate dependence, for instance, principal component analysis, Bayesian networks, fuzzy techniques, factor analysis, and joint distribution function, \cite{Huynh2014, Kole2007}. 
-The dependence among the random variables $x_1, x_2, \ldots, x_d$, is completely described by the joint distribution function $F_X(x_1, x_2, \ldots, x_d)$. 
-The idea of separating $F_X(x_1, x_2, \ldots, x_d)$ in two parts -- the one which describes the dependence structure, and the other one which describes the marginal behavior, leads to the concept of copula.
+There are many different approaches that are actively used in applications to represent multivariate dependencies, for instance, principal component analysis, Bayesian networks, fuzzy techniques, factor analysis, and joint distribution function~\cite{Huynh2014, Kole2007}. 
 
 In 1959, A.~Sklar~\cite{Sklar1959} first proved the theorem that a collection of marginal distributions can be coupled together via a \textit{copula} to form a multivariate distribution.
-The copula contains all the information about the dependence structure of the involved variables.
-In the paper~\cite{Penikas2010}, the author introduced copula-models' concepts and its application to the different financial issues including the task of risk measurement.
+% The copula contains all the information about the dependence structure of the involved variables.
+In the paper~\cite{Penikas2010}, the author introduced copula models concepts and its application to the different financial issues including the task of risk measurement.
 
-Many ways to describe financial data using Gaussian (normal) distribution exist today. 
-It is well known from \cite{Xu2008} that a full Gaussian copula, i.\,e., a Gaussian copula constructed by Gaussian (normal) marginals, is another way to describe Markowitz's mean-variance portfolio theory. 
-On the other hand, a lot of empirical studies have shown that Gaussian distribution has a lot of problem in dependence description of financial data, see, e.g., \cite{Rachev2005, Limp2011, Wilmott2007, Pourkhanali2016}. 
-Moreover, in the standard \cite{EBA2015} is proposed that Gaussian copulas are not to be used for operational risk modelling. 
-For instance, a Student's~$t$ copula with few integer degrees of freedom (three or four) in most cases appears more appropriate.
-Closed-form expressions to calculate the sensitivity of the risk measure, \textit{CVaR}, were proposed in the paper by \cite{Stoyanov2013}.
+Closed-form expressions to calculate the sensitivity of the risk measure, \textit{CVaR}, were proposed in the paper by Stoyanov et al.~\cite{Stoyanov2013}.
 
-Studies of price risks in framework of portfolio management \cite{Ane2003, Kole2007, Lourme2016, Xu2008} in many respects are similar to each other and differ only in the used data and insignificant variations in the copula models estimation. 
-Among the studies, we single out the paper by \cite{Ane2003} that was one of the first one where authors selected the dependence structure of international stock index returns through the Clayton copula. 
-\cite{Lourme2016} address the issue of testing the full Gaussian and Student's~$t$ copulas in a risk management framework. 
+Studies of price risks in framework of portfolio management~\cite{Ane2003, Kole2007, Lourme2016, Xu2008} in many respects are similar to each other and differ only in the used data and insignificant variations in the copula models estimation. 
+Among the studies, we single out the paper by An\'e et al.~\cite{Ane2003} that was one of the first where authors selected the dependence structure of international stock index returns through the Clayton copula. 
+Lourme~et~al.~\cite{Lourme2016} address the issue of testing the full Gaussian and Student's~$t$ copulas in a risk management framework.
 They proposed the $d$-dimensional compact Gaussian and Student's~$t$ confidence area inside of which a random vector with uniform margins on $(0, 1)$ falls with probability~$\alpha$. 
 The results evidence that the Student's~$t$ copula \textit{VaR} model is an attractive alternative to the Gaussian one.
-A portfolio of stocks, bonds and real estate was considered by \cite{Kole2007} to determine the importance of selecting the right copula for risk management. 
-The Gaussian, the Student’s~$t$ and the Gumbel copulas to model the dependence of the daily returns on indexes that approximate these three asset classes were tested. 
-Then with Value-at-Risk computations was established that the Gaussian copula is too optimistic on the diversification benefits of the assets, while the Gumbel copula is too pessimistic.  
+A portfolio of stocks, bonds and real estate was considered by Kole~et~al.~\cite{Kole2007} to determine the importance of selecting the right copula for risk management. 
+The Gaussian, the Student’s~$t$ and the Gumbel copulas have been used to model the dependence of the daily returns on indices that approximate these three asset classes were tested. 
+Then according to Value-at-Risk computations it was established that the Gaussian copula is too optimistic on the diversification benefits of the assets, while the Gumbel copula is too pessimistic.
 
-Estimation of the unknown parameters is an important problem. 
-At present, many algorithms for constructing copulas have been designed.
-For copula model estimation, there exist three methods: the full parametric method \cite{Patton2006}, the semi-parametric method \cite{Lourme2016, Chen2006}, and the non-parametric method \cite{Fermanian2003, Kim2007}.
-The full parametric method is implemented via two-stage maximum likelihood estimation (MLE) proposed by \cite{Joe1997, Joe2014}. %(1997, 2005, 2014).
-The copula is fitted using the two-stage parametric MLE approach, also referred to as the Inference Functions for Margins (IFM) method.
-This method fits a copula in two steps: (1) estimate the parameters of the marginals, and (2) fix the marginal parameters to the values estimated in first step, and subsequently estimate the copula parameters.
-
-For the the bivariate case, the main families of copulas are: ellipse (Gaussian, Student's~$t$), archimedean (Clayton, Frank, Joe), and extreme (Gumbel, Cauchy).
-In the dissertation research \cite{Xu2008}, the two-stage  MLE method was applied, while the author uses all possible combinations of different marginal distributions (Gaussian, the Student's $t$, and skewed $t$ distribution) and different archimedean copulas in the estimation and testing process. 
+Estimation of the unknown copula and marginal parameters is an important problem.
+Nowadays many algorithms for constructing and fitting copulas have been designed.
+For copula model estimation, there exist three methods: the full parametric method~\cite{Patton2006}, the semi-parametric method~\cite{Chen2006, Lourme2016}, and the non-parametric method~\cite{Fermanian2003, Kim2007}.
+The full parametric method is implemented via two-stage maximum likelihood estimation (MLE) proposed in the monographs~\cite{Joe1997, Joe2014}.
+In the dissertation research~\cite{Xu2008}, the two-stage  MLE method was applied, while the author uses all possible combinations of different marginal distributions (Gaussian, the Student's $t$, and skewed $t$ distribution) and different archimedean copulas in the estimation and testing process. 
 The decision of choosing the marginal distribution is taken after the second step of MLE method.
-For this purpose, a modification of the superior predictive ability of the Hansen test was proposed \cite{Hansen2005}; it allows one to identify a copula that has superior forecasting ability.
+For this purpose, a modification of the superior predictive ability of the Hansen test was proposed~\cite{Hansen2005}; it allows one to identify a copula that has superior forecasting ability.
 
-Multivariate copulas based on the one distribution (for instance, normal or Student's~$t$) or on one the generator function lack the flexibility of accurately modeling the dependence among larger numbers of variables \cite{Brechmann2013}. 
-These lacks predetermined the direction of further research, as a result of which the regular vine copulas' (R-vine) concept was proposed by \cite{Joe1996} and developed in more detail by \cite{Brechmann2013, Cooke2015}.
-R-vine copulas are a flexible graphical model for describing multivariate copulas built up using
-a cascade of bivariate copulas (two-dimensional function). 
-This copula is easier to be interpreted and visualized, and we have a lot of methods to work with it today \cite{Nikoloulopoulos2012, Cooke2015, Czado2010, Dissmann2013}. 
-\cite{Nikoloulopoulos2012} applied the vine copulas with asymmetric tail dependence for financial return data.
+Multivariate copulas based on the one distribution (for instance, normal or Student's~$t$) or on one the generator function lack the flexibility of accurately modelling the dependence among larger numbers of variables~\cite{Brechmann2013}. 
+These lacks predetermined the direction of further research, as a result of which the regular vine copulas' (R-vine) concept was proposed by Joe~\cite{Joe1996} and developed in more detail in papers~\cite{Brechmann2013,Cooke2015}.
+There are a lot of methods to work with vine copulas~\cite{Cooke2015,Czado2010,Dissmann2013,Nikoloulopoulos2012}. Nikoloulopoulos~et~al.~\cite{Nikoloulopoulos2012} applied the vine copulas with asymmetric tail dependence for financial return data.
 A novel algorithms for evaluating a \textit{regular vine copula} parameters and simulating
-from specified R-vines were proposed by \cite{Dissmann2013}. 
-The selection of the R-vine tree structure based on a maximum spanning tree algorithm (MST), where edge weights are chosen appropriately to reflect large dependencies.
-\cite{Pourkhanali2016} proposed the use of vine copula for measuring systemic risk, they developed a metric that captures crucial features of the dependence relationship: tail-dependence and correlation asymmetry.
+from specified R-vines were proposed by Di{\ss}mann~et~al.~\cite{Dissmann2013}. 
+% The selection of the R-vine tree structure based on a maximum spanning tree algorithm (MST), where edge weights are chosen appropriately to reflect large dependencies.
+The use of vine copula is proposed for measuring systemic risk in the paper~\cite{Pourkhanali2016}. 
+The authors developed a metric that captures crucial features of the dependence relationship: tail-dependence and correlation asymmetry.
+
+
+\section*{Methodology}
+
+\subsection*{Initial data}
+
+First, initial time series should be converted to logarithmic returns.
+In this way, we can obtain the data set we can further use in marginal distribution parameters estimation.
+Eq.~(\ref{eng:log-returns}) transforms a price series $p$ into a log-returns $r$ series for each asset:
+
+\begin{equation}\label{eng:log-returns}
+r_{t,i}=\log \frac{p_{t,i}}{p_{t-1,i}},
+\end{equation}
+\begin{where*}
+    \item $i \in \overline{1, d}$, $d$ is the number of assets;
+    \item $t\in \overline{1, T}$ is a time point, in our case $T=253$;
+\end{where*}
+
+Since financial time series have a nonlinear dependence which is not covered by usual Peasrson's correlation coefficient, we use rank correlation coefficients: Kendall's $\tau$ and Spearman's $\rho$. 
+Following to \cite{Dissmann2013}, in further calculations, we used Kendall's~$\tau$.
+
+Let $X$ and $Y$ be two random variables defined in some probability space.
+Then Spearman's rank correlation $\rho$ coefficient is defined as follows~\cite{Mye2003}
+\begin{equation}\label{eng:spearman}
+\rho = r(\text{rg}_X, \text{rg}_Y) = \frac{\text{cov}(\text{rg}_{X},\text{rg}_{Y})}{\sigma_{rg_X} \sigma_{rg_Y}},
+\end{equation}
+\begin{where*}
+    \item $r(x,y)$~--- Pearson's correlation;
+    \item $\text{rg}_X$ and $\text{rg}_Y$~--- random variables' rank;
+    \item $\text{cov} (\text{rg}_{X}, \text{rg}_{Y})$~--- covariance of random variables' rank;
+    \item $\sigma$~--- standard deviation.
+\end{where*}
+
+For two independent pairs $(X_a, X_b)$ and $(Y_a, Y_b)$ of the same random variables one can calculate Kendall's $\tau$~\cite{Kendall1970}:
+\begin{eqnarray}\label{eng:kendall}
+\tau &=& P\left[(X_a-X_b)(Y_a-Y_b)>0\right]-P\left[(X_a-X_b)(Y_a-Y_b)<0\right] = \\ 
+&=& r\left(\text{sgn}(X_a-X_b),\text{sgn}(Y_a-Y_b)\right),\nonumber
+\end{eqnarray}
+\begin{where*}
+    \item $r(x,y)$~--- Pearson's correlation;
+    \item $sgn(\cdot)$~--- real number's sign.
+\end{where*}
+
+In contrast with Pearson's correlation, both of these rank coefficients are less sensitive to strong outliers which are the features of financial time series.
+We will base our choice on article~\cite{Dissmann2013} and use Kendall's~$\tau$ in further calculations.
+
+In the research the portfolio with the following assets is used:
+\begin{enumerate}[label=\arabic*)]
+    \item RTS index futures;
+    \item Sberbank PJSC stocks futures;
+    \item Gazprom PJSC stocks futures;
+    \item MMC Norilsk Nickel PJSC stocks futures.
+\end{enumerate}
+
+Our sample has daily close values and covers the period of two years since December 16, 2015 to December 16, 2017 (504 observations). 
+Denote them as RTS, SBRF, GAZP and GMKR respectively.
+All that data regarding the futures prices were collected from the Finam Holdings service.
+
+The obtained time series main characteristics are shown on Table~\ref{eng:tab:eng:assets}.
+
+\begin{table}[htb]
+    \centering
+    \caption{Main characteristics of log-returns}
+    \label{eng:tab:eng:assets}
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{l|cc|rrrr|rrrr}
+        \toprule
+        \multirow{2}{*}{Assets} & \multicolumn{2}{c|}{Moments} & \multicolumn{4}{c|}{Spearman's $\rho$} & \multicolumn{4}{c}{Kendall's $\tau$} \\
+        & $\mu$ & $\sigma$ & \multicolumn{1}{c}{RTS} & \multicolumn{1}{c}{SBRF} & \multicolumn{1}{c}{GAZR} & \multicolumn{1}{c|}{GMKR} & \multicolumn{1}{c}{RTS} & \multicolumn{1}{c}{SBRF} & \multicolumn{1}{c}{GAZR} & \multicolumn{1}{c}{GMKR} \\ 
+        \midrule
+RTS  &  0.00075 & 0.016 &     1 & 0.702 & 0.621 & 0.323 &     1 & 0.515 & 0.444 & 0.218 \\
+SBRF &  0.00154 & 0.016 & 0.702 &     1 & 0.519 & 0.308 & 0.515 &     1 & 0.364 & 0.208 \\
+GAZR & -0.00001 & 0.013 & 0.621 & 0.519 &     1 & 0.375 & 0.444 & 0.364 &     1 & 0.256 \\
+GMKR &  0.00033 & 0.015 & 0.323 & 0.308 & 0.375 &     1 & 0.218 & 0.208 & 0.256 &     1 \\    
+        \bottomrule
+    \end{tabular}
+    \end{adjustbox}
+\end{table}
+
+
+\subsection*{Marginal distributions parameters estimation}
+
+Many ways to describe financial data using Gaussian (normal) distribution exist today~\cite{Json1949}. 
+On the other hand, a lot of empirical studies have shown that Gaussian distribution has a lot of problems with description of financial data, for instance see~\cite{Limp2011, Rachev2005, Wilmott2007}. 
+Various non-normal distributions have been proposed for modelling extreme events, we choose the Hyperbolic~\cite{Barndoff1983}, Stable~\cite{Nolan2009, Rachev2005, Stoyanov2013} and Meixner~\cite{Schoutens2002} distributions as the three possible forms of marginal distributions.
+These types of distribution are able to handle financial data features, such as heavy tails and skewness~\cite{Stoyanov2013}. 
+
+A hyperbolic distribution $H(\pi, \zeta, \delta, \mu)$ is four parameter distribution \cite{Barndoff1983} determined by $\pi$ as a steepness parameter, $\zeta$ as a symmetry one, $\mu$ as a location one, and $\delta$ as a scale one.
+The distribution is symmetrical about
+$\mu$ if $\zeta=0$.
+Eq.~(\ref{eng:hpdf}) describes the probability density function (PDF) of the univariate hyperbolic distribution:
+\begin{eqnarray}\label{eng:hpdf} 
+f_H(x|\pi,\zeta,\delta,\mu)=\frac{1}{2 \sqrt{1+\pi^2} 
+K_1(\zeta) }e^{-\zeta \left[ \sqrt{1+\pi^2}
+\sqrt{1+\big(\frac{x-\mu}{\delta})^2}-
+\pi\frac{x-\mu}{\delta}\right]},
+\end{eqnarray}
+\begin{where*}
+    \item $K_1$ is the 1st order modified Bessel function of the third kind~\cite{Bessel1824};
+    \item $\pi \in \mathbb{R}$, $\zeta > 0$, $\delta > 0$, $\mu \in \mathbb{R}$.
+\end{where*}
+
+A stable distribution $S(\alpha, \beta, \gamma, \mu)$ is also described by four parameters~\cite{Rachev2005, Nolan2009, Stoyanov2013}.
+The parameter $\alpha$ determines the tail weight and the kurtosis, $\beta$ determines the skewness, $\gamma$ is a scale parameter, and $\mu$ is a location parameter.
+Since the probability density function and cumulative distribution function (c.d.f.) of the stable distribution does not exist in a closed-form, we use its characteristic function:
+\begin{eqnarray}\label{eng:StChF} 
+\varphi_S(x|\alpha,\beta,\gamma,\delta) &=& \exp{\left[ix\delta-|\gamma x|^\alpha \left(1 - i\beta\text{sgn}(x)\Upphi(x)\right)\right]}, \\
+\Upphi(x) &=& \left\{ \begin{aligned}
+    & \left(|\gamma x|^{1-\alpha} - 1\right)\tan{\frac{\pi\alpha}{2}}, & & \alpha \ne 1, \\
+    & -\frac{2}{\pi}\log{|\gamma x|}, & & \alpha = 1,
+\end{aligned} \right. \nonumber
+\end{eqnarray}
+\begin{where*}
+    \item $\alpha \in (0;\ 2]$, $\beta \in [-1;\ 1]$, $\gamma > 0$, $\delta \in \mathbb{R}$;
+    \item $i$ is the imaginary unit.
+\end{where*}
+
+A Meixner distribution $M(\alpha, \beta, \delta, \mu)$ has four parameters: $\mu$ is the location parameter, $\alpha$ is the scale parameter, $\beta$ is the skewness parameter, and $\delta$ is the shape parameter \cite{Schoutens2002}.
+Eq.~(\ref{eng:mpdf}) describes the density of the Meixner distribution:%
+\begin{equation} \label{eng:mpdf}
+    f_M(x|\alpha,\beta,\delta,\mu)=\frac{\left(2\cos{\frac{\beta}{2}}\right)^{2\delta}}{2\alpha\pi\Upgamma(2\delta)}\exp{\frac{\beta(x-\mu)}{\alpha}}\left|\Upgamma\left(\delta + i\frac{x-\mu}{\alpha}\right)\right|^2,
+\end{equation}
+\begin{where*}
+    \item $\Upgamma(z)$ is the gamma function for complex arguments;
+    \item $\alpha > 0$, $|\beta| < \pi$, $\delta > 0$, $\mu \in \mathbb{R}$.
+\end{where*}
+
+Parameters for hyperbolic distribution have been estimated by the Nelder-Mead method, for the stable and the Meixner distribution –– by the Cramér\,--\,von~Mises distance. 
+The results obtained for the log-returns are shown in Table~\ref{eng:tab:eng:marginals}.
+
+\begin{table}
+\centering
+\caption{Marginal distribution estimation results}
+\label{eng:tab:eng:marginals}
+\begin{tabularx}{\textwidth}
+{>{\hsize=2.4\hsize}X >{\hsize=0.4\hsize}Y *{4}{>{\hsize=0.8\hsize}R}}
+\toprule \multicolumn{2}{c}{Parameters} & \multicolumn{1}{c}{RTS} &
+\multicolumn{1}{c}{SBRF} & \multicolumn{1}{c}{GAZR} &
+\multicolumn{1}{c}{GMKR} \\ \midrule[1pt]
+\multirow{4}{*}{\parbox{\hsize}{Hyperbolic distribution}}
+    &    $\pi$ &    0.00336 &    0.06100 &    0.06751 &    0.03301 \\
+    &  $\zeta$ &    0.68417 &    0.80977 &    0.73310 &    3.31449 \\
+    & $\delta$ &    0.00694	&    0.00823 &    0.00609 &    0.02232 \\
+    &    $\mu$ &    0.00067 & $-$0.00003 & $-$0.00139 & $-$0.00076 \\ \midrule
+\multirow{4}{*}{\parbox{\hsize}{Stable distribution}}
+    & $\alpha$ &    1.53561 &    1.56414 &    1.86326 &    1.92994 \\
+    &  $\beta$ &    0.21114 &    0.22262 &    0.85066 &    0.66465 \\
+    & $\gamma$ &    0.00884 &    0.00926 &    0.00770 &    0.00999 \\
+    & $\delta$ &    0.00020 &    0.00063 & $-$0.00099 & $-$0.00016 \\ \midrule
+\multirow{4}{*}{\parbox{\hsize}{Meixner distribution}}
+    & $\alpha$ &    0.03306 &    0.03064 &    0.02642 &    0.00428 \\
+    &  $\beta$ &    0.30800 &    0.45599 &    0.22236 &    0.87412 \\
+    & $\delta$ &    0.44168 &    0.51881 &    0.47397 &   18.31193 \\
+    &    $\mu$ & $-$0.00099 & $-$0.00173 & $-$0.00143 & $-$0.03615 \\ \bottomrule
+\end{tabularx}
+\end{table}
+
+To assess the quality of estimated parameters we use Kolmogorov\,--\,Smirnov, Anderson\,--\,Darling and Cramér\,--\,von~Mises goodness-of-fit tests.
+These tests compare empirical observations with data simulated using marginals with obtained parameters.
+
+\begin{table}
+\centering
+\caption{Statistical tests $p$-values}
+\label{eng:tab:eng:margintest}
+\begin{tabularx}{\textwidth}
+{>{\hsize=2.2\hsize}X X *{4}{>{\hsize=0.7\hsize}Y}} \toprule
+\multicolumn{1}{c}{Test} & \multicolumn{1}{c}{Distribution} & RTS & SBRF & GAZR & GMKR \bigstrut \\ \midrule[1pt]
+\multirow{3}{*}{Kolmogorov\,--\,Smirnov}
+    & Hyperbolic & 0.91 & 0.88 & 1.00 & 0.79 \\
+    & Stable     & 0.89 & 0.94 & 0.87 & 0.94 \\
+    & Meixner    & 0.99 & 0.95 & 1.00 & 0.96 \\ \midrule
+\multirow{3}{*}{Anderson\,--\,Darling}
+    & Hyperbolic & 0.88 & 0.94 & 1.00 & 0.93 \\
+    & Stable     & 0.73 & 0.87 & 0.47 & 0.97 \\
+    & Meixner    & 0.87 & 0.92 & 1.00 & 0.90 \\ \midrule
+\multirow{3}{*}{Cram\'er\,--\,von Mises}
+    & Hyperbolic & 0.94 & 0.89 & 1.00 & 0.90 \\
+    & Stable     & 0.97 & 0.92 & 0.94 & 0.98 \\
+    & Meixner    & 0.99\cellcolor{gray!33} & 0.95\cellcolor{gray!33} & 1.00\cellcolor{gray!33} & 0.98\cellcolor{gray!33} \\ \bottomrule
+\end{tabularx}
+\end{table}
+
+
+\subsection*{Copula model parameters estimations}
+
+% We use multivariate and R-vine copula models.
+% Let us assume the following designations.
+
+% Let $d$-dimensional copula \emph{C} be \textit{elliptical} if its distribution function is defined as follows
+% \begin{equation} \label{eng:EllipCop}
+%     C(u_1, u_2, \ldots,u_d|\theta) = F_d(F^{-1}(u_1|\theta),F^{-1}(u_2|\theta), \ldots,F^{-1}(u_d|\theta)|\theta),
+% \end{equation}
+% \begin{where*}
+%     \item $F(x)$ is cumulative function of marginal distribution;
+%     \item $F^{-1}(p)$ is inverse marginal distribution function;
+%     \item $F_d(x_1, x_2, \dots, x_d)$ is $d$-dimensional joint cumulative function;
+%     \item $\theta$ is parameter vector.
+% \end{where*}
+
+At this stage, we suggest the constructing of copula using two types of copula models: multivariate copula and regular vine (R-vine) copula. 
+% For the sake of brevity, the known formulae corresponding to the copulas are not reported here, but are available in \cite{Nelsen1999, Joe2014,Czado2010,Cooke2015}.
+
+First, we should generate points of the empirical copula also known as \textit{pseudo-observations}. 
+Considering  Eq.~(\ref{eng:log-returns}) $\boldsymbol{r}_i = (r_{1,i}, r_{2,i},  \ldots, r_{T,i})^\intercal$ for all historical observations (log-returns) $i \in \overline{1,d}$, pseudo-observations are then defined as: %via the Eq.~(\ref{eng:pobs}):
+\begin{equation} \label{eng:pobs}
+    u_{t,i} = \frac{\text{rg}(r_{t,i})}{T + 1},\ \forall \ t \in \overline{1,T},\ i \in \overline{1,d},
+\end{equation}
+where
+     $\text{rg}(r_{t,i})$ denotes the rank of $r_{t,i}$ (from lowest to highest) of the observed values $r_{\tau,i}, \tau \in \overline{1,T}$ \cite{Copula}
+%
+Each element $u_{t,i}$ is
+between $0$ and $1$. 
+% Pairs plots of the joint distribution of observed data and the pseudo-observations are shown on Fig.~\ref{eng:eng;pairs}.
+
+In this study we use elliptical copulas of two families: Gaussian (normal) and Student's~$t$ copulas.
+
+To estimate the copula parameters we use
+pseudo-observations calculated by Eq.~(\ref{eng:pobs}). 
+The decision of choosing the copula parameters is taken by "Inversion of Kendall’s tau" method~\cite{Koj2010}. 
+Then we execute a parametric bootstrap-based goodness-of-fit (GoF) test of elliptical copulas to check their quality~\cite{Gen2009}. Estimated parameters are shown in Eq.~(\ref{eng:gausscopfit}) and~(\ref{eng:tcopfit}). Test results are shown in Table~\ref{eng:CopPars}. 
+As one can see the parameters of elliptical copulas and results of GoF test are very close to each other.
+\begin{equation} \label{eng:gausscopfit}
+    \Sigma_{Gauss} = \left(
+    \begin{array}{cccc}
+        1 & & & \\
+        0.723 & 1 & & \\
+        0.642 & 0.540 & 1 & \\
+        0.335 & 0.320 & 0.391 & 1
+    \end{array} \right),
+\end{equation}
+
+\begin{equation} \label{eng:tcopfit}
+    \Sigma_t = \left(
+    \begin{array}{cccc}
+        1 & & & \\
+        0.723 & 1 & & \\
+        0.642 & 0.540 & 1 & \\
+        0.335 & 0.320 & 0.391 & 1
+    \end{array} \right), \ \nu = 4.
+\end{equation}
+
+The negative side of using multivariate copula model is that we can not (a) check the quality, and (b) construct the cumulative distribution function of Student's~$t$ copula with non-integer degrees of freedom.
+
+Alternative way to construct copula models is using R-vine copulas. 
+As we know from \cite{Bedfort2002}, a $d$-dimensional vine is a copula constructed of $d(d - 1)/2$ usual bivariate copulas.  
+The main advantage of the vine model is that all of its component copulas are represented by a pair-copula (two-dimensional function).
+This copula is easier to be interpreted and visualized, and we have a lot of methods to work with it today~\cite{Cooke2015, Czado2010, Dissmann2013}. 
+
+Following~\cite{Dissmann2013}, we use absolute empirical Kendall's $\tau$ as a measure of dependence, since it makes it independent of the assumed distribution. 
+We use the same method~\cite{Koj2010} to estimate the parameters as we did it with multivariate copulas. Also, we can use non-integer degrees of freedom for copulas with two parameters. 
+In addition, we choose different families for each pair~\cite{Bel2010, Clarke2007, Vuong1989}. 
+Using abbreviations for copula types: $SG$~--- Survival Gumbel, $SC$~--- Survival Clayton, $SBB1$~--- Survival Clayton-Gumbel, $BB7$~--- Joe-Clayton, $Ind$~--- independence copula, the estimated R-vine copula is given by \cite{Czado2010}:
+\begin{gather} \label{eng:vinefit}
+    M = \left(
+        \begin{array}{cccc}
+        2 &   &   &   \\
+        4 & 1 &   &   \\
+        3 & 4 & 3 &   \\
+        1 & 3 & 4 & 4 \\
+        \end{array} \right), \\
+    F = \left(
+        \begin{array}{lll}%{*4{C{5em}}}
+        Fr\ &\  &    \\
+        Gu\ &\ Cl\ &   \\
+        St\ &\ SBB1\ &\ SG\
+        \end{array} \right), \nonumber\\    
+    P_1 = \left(
+        \begin{array}{ccc}
+        0.544 & & \\
+        1.098 & 0.158 & \\
+        0.722 & 0.124 & 1.327
+        \end{array} \right), \nonumber\\
+    P_2 = \left(
+        \begin{array}{ccc}
+        0 &  & \\
+        0 & 0 & \\
+        7.566 & 1.682 & 0
+        \end{array} \right). \nonumber
+\end{gather}
+\begin{where*}
+    \item $M$ is a matrix which defines the tree structure;
+    \item $F$ is a family matrix;
+    \item $P_1$, $P_2$ are matrices with first and second parameters respectively.
+\end{where*}
+
+Matrix $F$ contains the following families of distributions: $St$~--- Students's, $Gu$~--- Gumbel, $Cl$~--- Clayton, $Fr$~--- Frank, $SBB1$~--- Survival BB1, $SG$~--- Survival Gumbel.
+
+\begin{table}
+\centering
+\caption{The parameters estimation test results for multivariate Gaussian, Student's~$t$, and R-vine copulas}
+\label{eng:CopPars}
+\begin{tabularx}{\textwidth}
+{>{\hsize=1.6\hsize}L >{\hsize=0.7\hsize}R>{\hsize=0.7\hsize}R}
+\toprule
+Copula    & Statistics  & $p$-value \\ \midrule
+Gaussian  & $S_n=0,034$ & 0,19 \\
+Student's & $S_n=0,391$ & 0,05 \\
+R-vine    & $W=15,15$   & 0,95    \\ \bottomrule
+\end{tabularx}
+\end{table}
+
+To check the estimated parameters, we use a goodness-of-fit test based on the Cram\'er-von Mises statistic, $S_n$  \cite{Koj2010} and the White’s information matrix equality, $W$ \cite{White1982}. 
+The result of the test implementation is shown in Table~\ref{eng:CopPars}. As one can see the $p$-values of elliptical copulas are less than corresponding $p$-value of the R-vine copula.
+
+
+\section*{Portfolio Application}\label{eng:PortApp}
+
+In this section, we present some simulation results to compare the performances of VaR and CVaR on an equally weighted portfolio composed of $d=4$ assets. 
+Then we applied the above results to compute the optimal weights of each asset, which is one of the major concerns in the field of portfolio risk management.
+
+\subsection*{Mean-Conditional-Value-at-Risk Portfolio Optimization}
+
+The advantage of the CVaR portfolio optimization is that we can formulate the mean-CVaR portfolio optimization as a linear programming problem~\cite{Rock2000}.
+If we can find a portfolio with a low CVaR, then it will also have a low VaR~\cite{wnc04}.
+We assume a "full investment" portfolio with only long positions, furthermore, to avoid a corner portfolio case, let the minimal weight be limited by $0.05$. 
+The mean-CVaR portfolio weights we obtained are $0.05$, $0.114$, $0.384$, and $0.452$ for 
+RTS, SBRF,  GAZP, and GMKR respectively.
+
+Now let us compare VaR and CVaR values of equally weighted and mean-CVaR optimal portfolio obtaining for historical scenario by empirical methods~\cite{Rock2000}.
+Let us consider $$\alpha = \{99.9\%,\, 99.5\%,\, 99\%,\, 95\%,\, 90\%\}$$ as a confidence level for VaR and CVaR computations. 
+It can be seen from the simulation results (Table~\ref{eng:comparison}) that values of risk measures for optimal portfolio are distinctively better, as expected. 
+Further, we will consider the optimal portfolio only.
+
+\begin{table}[hbt]
+\centering
+\caption{Risk measures and associated bias for different portfolios and level,~$\alpha$}
+\label{eng:comparison}
+\begin{tabularx}{0.8\textwidth}
+{>{\setlength{\hsize}{\hsize}}Y 
+*{3}{>{\setlength{\hsize}{\hsize}}R
+@{\ /\ }>{\setlength{\hsize}{\hsize}}X}}
+\toprule
+    \multirow{2}{*}{$\upalpha$, \%} & \multicolumn{6}{c}{$\emph{VaR}_\alpha$ / $\emph{CVaR}_\alpha$, $\times 10^{-2}$} \\ \cmidrule{2-7} 
+    & \multicolumn{2}{c}{Optimal} & \multicolumn{2}{c}{Equiweighted} & \multicolumn{2}{c}{Bias, $\times 10^{-2}$} \\ \midrule
+    90.0 & $1.31$ & $2.01$ & $1.32$ & $2.14$ & $0.01$ & $0.13$ \\ 
+    95.0 & $1.69$ & $2.48$ & $1.82$ & $2.74$ & $0.13$ & $0.25$ \\ 
+    99.0 & $2.59$ & $3.96$ & $2.79$ & $4.36$ & $0.21$ & $0.41$ \\ 
+    99.5 & $3.63$ & $5.22$ & $4.05$ & $5.50$ & $0.43$ & $0.28$ \\ 
+    99.9 & $5.62$ & $5.86$ & $6.05$ & $6.29$ & $0.44$ & $0.43$ \\ 
+    \bottomrule
+\end{tabularx}
+\end{table}
+
+
+\subsection*{Efficient Algorithm of Risk Measure Computation using Copula Models}
+
+Now we propose the following algorithm based on Monte-Carlo simulation of pseudo-observations to compute the risk measures.
+
+Algorithm~\ref{eng:PnL-quantiles} represents the method we used to compute VaR and CVaR. Method is based on Monte-Carlo simulation of pseudo-observations using proposed copula models with estimated parameters. 
+In order to generate random samples (line~\ref{eng:Alg:simulation}) we used Gaussian and Student's $t$ copula parameters (Table~\ref{eng:CopPars}) and the R-vine array structure, Eq.~(\ref{eng:vinefit}). 
+Then we transform each univariate pseudo-observation series to quantiles: $[0,1] \to \mathbb{R}$  (lines~\ref{eng:Alg:transform:start}--\ref{eng:Alg:transform:end}). 
+In order to implement the transformation we take a quantile of each log-returns series using simulated pseudo-observations throw all dimensions of the copula as probabilities (line~\ref{eng:Alg:transform}). 
+Using optimal mean-CVaR portfolio weights we compute portfolio's Profit \& Loss series (line~\ref{eng:Alg:PnL}) and risk measures (line~\ref{eng:Alg:risk-measures}). 
+
+The obtained results for VaR and CVaR are shown in Table~\ref{eng:VaR-results} and \ref{eng:ES-results} respectively. As we can see, 
+vine copula model is the most conservative one. 
+It means that we will not loose more than we predict by the model, in other words, the model does not underestimate the risk. 
+Thus, we can say that the R-vine copula model has superior forecasting ability than the Gaussian and the Student's~$t$ one.
+
+\begin{algorithm}
+\caption{Computation of Risk Measures by a Copula}
+\label{eng:PnL-quantiles}
+\begin{algorithmic}[1]
+	\Require Log-returns $\{r_{i,t}\}$, weights $w_i$ of optimal portfolio, $i \in \overline{1,d}$, $d$-dimensional copula c.d.f. with parameters and the array structure for R-vine, level $\alpha$ for $VaR_\alpha$ and $CVaR_\alpha$ calculation.
+	\State Generate a sample of pseudo-observations $\{\hat{u}_{i,s}\} \in [0, 1]^d, \ i \in \overline{1,d}, \ s \in \overline{1, S}$ according to the given copula.\label{eng:Alg:simulation}
+	\State Transform simulated pseudo-observations to univariate quantiles:
+	\label{eng:Alg:transform:start}
+	\For {$i \in \overline{1,d}$}
+        \For {$s \in \overline{1,S}$}
+            \State Set $\hat{r}_{i,s} \gets F^{-1}_i (\hat{u}_{i,s})$. 
+            \label{eng:Alg:transform}
+	    \EndFor
+	\EndFor \label{eng:Alg:transform:end}
+	\State Compute the portfolio Profit \& Loss series:
+	\For {$s \in \overline{1,S}$} 
+	    \State $P\&L_k \gets \sum_{i=1}^d \hat{r}_{i,s} \cdot w_i$. \label{eng:Alg:PnL}
+	\EndFor
+	\State Calculate $\emph{VaR}_\alpha$, $\emph{CVaR}_\alpha$ of Profit \& Loss series \label{eng:Alg:risk-measures} % by Eq.~\ref{eng:VaR}~and~\ref{eng:ES2} respectively.
+	\Ensure $\emph{VaR}_\alpha$ and $\emph{CVaR}_\alpha$ of simulated Profit \& Loss series.
+\end{algorithmic}
+\end{algorithm}
+
+\begin{table}
+\centering
+\caption{VaR obtained empirically and estimated by Gaussian\,/\,Student's~$t$\,/\,R-vine copulas}
+\label{eng:VaR-results}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabularx}{\textwidth}{
+>{\setlength{\hsize}{\hsize}}Y|
+>{\setlength{\hsize}{\hsize}}Y
+*{2}{|>{\setlength{\hsize}{0.4\hsize}}R
+*{2}{@{\,/\,}>{\setlength{\hsize}{0.4\hsize}}R}}}
+\toprule
+\multicolumn{1}{c|}{Level, \%} & \multicolumn{1}{c|}{$\widehat{\emph{VaR}}$, $\times 10^{-2}$} & \multicolumn{3}{c|}{$\emph{VaR}^{est}$, $\times 10^{-2}$} & \multicolumn{3}{c}{$\Delta$, $\times 10^{-3}$} \bigstrut[t] \\ \midrule
+90.0   & $1.31$ & $1.57$ & $1.71$ & $1.51$ & $2.55$ & $3.94$ & $1.94$ \\ 
+95.0   & $1.69$ & $2.15$ & $2.37$ & $1.94$ & $4.56$ & $6.81$ & $2.48$ \\ 
+99.0   & $2.59$ & $3.28$ & $3.64$ & $3.28$ & $6.95$ & $10.54$ & $6.97$ \\ 
+99.5 & $3.63$ & $3.70$ & $4.02$ & $3.94$ & $0.69$ & $3.95$ & $3.13$ \\ 
+99.9 & $5.62$ & $5.63$ & $5.83$ & $6.01$ & $0.12$ & $2.18$ & $3.90$ \\ \bottomrule
+\end{tabularx}
+\end{adjustbox}
+\end{table}
+
+\begin{table}
+\centering
+\caption{CVaR obtained empirically and estimated by Gaussian\,/\,Student's~$t$\,/\,R-vine copula}
+\label{eng:ES-results}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabularx}{\textwidth}{
+>{\setlength{\hsize}{\hsize}}Y|
+>{\setlength{\hsize}{\hsize}}Y
+*{2}{|>{\setlength{\hsize}{0.4\hsize}}R
+*{2}{@{\,/\,}>{\setlength{\hsize}{0.4\hsize}}R}}}
+\toprule 
+\multicolumn{1}{c|}{Level, \%} & \multicolumn{1}{c|}{$\widehat{\emph{CVaR}}$, $\times 10^{-2}$} & \multicolumn{3}{c|}{$\emph{CVaR}^{est}$, $\times 10^{-2}$} & \multicolumn{3}{c}{$\Delta$, $\times 10^{-3}$} \bigstrut[t] \\ \midrule
+90.0   & $2.01$ & $2.38$ & $2.58$ & $2.32$ & $3.68$ & $5.66$ & $3.12$ \\ 
+95.0   & $2.48$ & $2.95$ & $3.17$ & $2.92$ & $4.65$ & $6.89$ & $4.35$ \\ 
+99.0   & $3.96$ & $4.25$ & $4.35$ & $4.50$ & $2.98$ & $3.94$ & $5.41$ \\ 
+99.5 & $5.22$ & $5.05$ & $4.95$ & $5.43$ & $-1.76$ & $-2.72$ & $2.06$ \\ 
+99.9 & $5.86$ & $5.81$ & $6.00$ & $6.01$ & $-0.51$ & $1.38$ & $1.51$ \\ \bottomrule
+\end{tabularx}
+\end{adjustbox}
+\end{table}
+
+
+\subsection*{Stability Study and Risk Measure Curve}
+
+Now let us make a stability research of proposed method. For this, we make bootstrap procedure replicating Algorithm~\ref{eng:PnL-quantiles}.
+The obtained results are shown in Table~\ref{eng:VaR-boot}, \ref{eng:ES-boot}.
+
+We report the bias, the standard deviation (SD) and the mean square error (MSE) based  on  $N=200$  replications.  The bias value is better at lower levels: 99\%, 95\%, 90\% for VaR, and 95\%, 90\% for CVaR.
+The SD and the MSE metrics show the greater instability of vine copula related to Gaussian (the most stable one) and Student's~$t$ model.
+
+\begin{table}
+\centering
+\caption{VaR estimation by Gaussian\,/\,Student's~$t$\,/\,R-vine~copula obtained by bootstrap procedure}
+\label{eng:VaR-boot}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c*{4}{|r@{\,/\,}r@{\,/\,}r}} \toprule
+\multicolumn{1}{c|}{Level, \%} & \multicolumn{3}{c|}{$\overline{\emph{VaR}}_\alpha$, $\times 10^{-2}$} & \multicolumn{3}{c|}{$\Delta, \times 10^{-3}$} & \multicolumn{3}{c|}{SD, $\times 10^{-2}$} & \multicolumn{3}{c}{RMSE, $\times 10^{-3}$} \\ \midrule
+90.0   & $1.61$ & $1.62$ & $1.61$ & $2.99$ &  $3.03$ &  $2.96$ & $0.80$ & $0.79$ & $0.85$ & $3.10$ & $3.13$ & $3.08$ \\
+95.0   & $2.19$ & $2.20$ & $2.18$ & $5.00$ &  $5.06$ &  $4.93$ & $1.18$ & $1.37$ & $1.48$ & $5.14$ & $5.24$ & $5.14$ \\
+99.0   & $3.46$ & $3.50$ & $3.46$ & $8.71$ &  $9.11$ &  $8.78$ & $1.79$ & $2.32$ & $2.47$ & $8.89$ & $9.40$ & $9.11$ \\
+99.5 & $4.04$ & $4.21$ & $4.09$ & $4.15$ &  $5.82$ &  $4.64$ & $4.22$ & $6.10$ & $5.69$ & $5.91$ & $8.42$ & $7.33$ \\
+99.9 & $5.62$ & $5.53$ & $5.49$ & $0.05$ & $-0.86$ & $-1.21$ & $3.81$ & $5.18$ & $5.16$ & $3.81$ & $5.24$ & $5.29$ \\ \bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}
+\centering
+\caption{CVaR estimation by Gaussian\,/\,Student's~$t$\,/\,Vine~copula obtained by bootstrap procedure}
+\label{eng:ES-boot}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c*{4}{|r@{\,/\,}r@{\,/\,}r}} \toprule
+\multicolumn{1}{c|}{Level, \%} & \multicolumn{3}{c|}{$\overline{\emph{CVaR}}_\alpha$, $\times 10^{-2}$} & \multicolumn{3}{c|}{$\Delta, \times 10^{-3}$} & \multicolumn{3}{c|}{SD, $\times 10^{-2}$} & \multicolumn{3}{c}{RMSE, $\times 10^{-3}$} \\ \midrule
+90.0   & $2.46$ & $2.47$ & $2.45$ &  $4.53$ &  $4.62$ &  $4.43$ & $1.08$ & $1.32$ & $1.35$ & $4.66$ & $4.80$ & $4.63$ \\ 
+95.0   & $3.06$ & $3.08$ & $3.05$ &  $5.78$ &  $5.92$ &  $5.62$ & $1.49$ & $1.90$ & $1.91$ & $5.97$ & $6.21$ & $5.93$ \\ 
+99.0   & $4.36$ & $4.40$ & $4.34$ &  $4.08$ &  $4.46$ &  $3.86$ & $3.05$ & $4.31$ & $4.21$ & $5.09$ & $6.19$ & $5.71$ \\ 
+99.5 & $5.00$ & $4.99$ & $4.94$ & $-2.26$ & $-2.31$ & $-2.86$ & $4.05$ & $5.40$ & $5.34$ & $4.63$ & $5.87$ & $6.05$ \\ 
+99.9 & $5.76$ & $5.68$ & $5.68$ & $-1.03$ & $-1.79$ & $-1.88$ & $2.45$ & $3.86$ & $3.52$ & $2.65$ & $4.25$ & $3.98$ \\ \bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+% Fig.~\ref{eng:VaR-curve} and \ref{eng:ES-curve} show the dynamics of Profit \& Loss series and the movement of 95\%-level VaR and CVaR respectively. VaR and CVaR curves simulated by copula models are lower than a historical one, thus, the proposed models are more conservative. % Daulet, 22.08
+% .
+% According to the results of a retrospective forecast 
+% % (Fig.~\ref{eng:VaR-curve} and \ref{eng:ES-curve})
+% , it can be seen that proposed copula models approximate Profit \& Loss series satisfactory. 
+% We note that the Profit \& Loss curve movements through a copula line based on CVaR models twice only (Fig.~\ref{eng:ES-curve}) while the Profit \& Loss curve breaks VaR lines~--- five times of 504 observations (Fig.~\ref{eng:VaR-curve}). Both cases correspond less that 2\%, therefore, curves satisfied the given 95\%-level. From a technical point of view, the support CVaR curve would be more preferable.
+
+The $p$-values of the Kupiec's VaR test~\cite{Kupiec95} for all proposed copula models are greater than the critical level $\alpha = 0.05$. 
+All three models have superior prediction ability than usual empirical method.  
+Table~\ref{tab:eng:Kupiec} shows the results of Kupiec's VaR test \cite{Kupiec95}.
+
+\begin{table}[hbt!]
+    \centering
+    \caption{Kupiec's test $LR$-statistics and $p$-value for VaR at 95\% confidence level computation}
+    \label{tab:eng:Kupiec}
+    \setlength{\tabcolsep}{10pt}
+    \begin{tabular}{lcc} \toprule
+        Method & LR-statistics & $p$-value \\ \midrule
+        empirical & 0.00 & 0.98 \\
+        Gaussian copula & 3.02 & 0.08 \\
+        $t$-copula & 10.29 & 0.00 \\
+        R-vine copula & 2.17 & 0.14 \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+
+

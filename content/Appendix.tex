@@ -1,10 +1,15 @@
+\counterwithin{figure}{Appendix}
+\counterwithin{table}{Appendix}
+\counterwithin{equation}{Appendix}
+% \renewcommand{\thefigure}{\theAppendix.\arabic{figure}}
+% \renewcommand{\thetable}{\theAppendix.\arabic{table}}
+% \renewcommand{\theequation}{\theAppendix.\arabic{equation}}
 \begingroup
 \centering
 
 \Appendix\label{appendix:lights}
-\fancyfoot[R]{}
+% \fancyfoot[R]{}
 План помещения и размещения светильников с люминесцентными лампами
-% \makebox[\textwidth]{
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{Lamps.png}
@@ -21,5 +26,81 @@
 
 \endgroup
 
-\Appendix\label{appendix:english}
+\Appendix\label{appendix:eng1}
+\begingroup
+\singlespacing
+\centering
+\AtBeginEnvironment{tabularx}{\setstretch{1}}
+\renewcommand\tabularxcolumn[1]{p{#1}}
+
+\vspace{\fill}
+\vspace{\fill}
+
+\textbf{Portfolio risk assessment using copula models}
+% Раздел~\ref{section:literature}
+
+% Обзор литературы
+
+\small
+\vspace{\fill}
+
+\begin{tabularx}{\textwidth}
+{|>{\hsize=0.64\hsize}Y|>{\hsize=2.08\hsize}Y|>{\hsize=0.64\hsize}Y|>{\hsize=0.64\hsize}Y|}
+    \multicolumn{4}{l}{Студент} \\
+    \hline
+    \scriptsize \textbf{Группа}
+        & \scriptsize \textbf{ФИО}
+        & \scriptsize \textbf{Подпись}
+        & \scriptsize \textbf{Дата} \\
+    \hline 
+    0ВМ61\bigstrut & Смагулов Даулет Серикбаевич & & \\ 
+    \hline
+\end{tabularx}
+
+\vspace{2ex}
+
+\begin{tabularx}{\textwidth}
+{|>{\hsize=1.7\hsize}Y|>{\hsize=1.0\hsize}Y|>{\hsize=0.9\hsize}Y|>{\hsize=0.7\hsize}Y|>{\hsize=0.7\hsize}Y|}
+    \multicolumn{5}{l}{Консультант отделения экспериментальной физики ИЯТШ:} \\
+    \hline
+    \scriptsize \textbf{Должность} 
+        & \scriptsize \textbf{ФИО} 
+        & \scriptsize \textbf{Учёная степень, звание} 
+        & \scriptsize \textbf{Подпись} 
+        & \scriptsize \textbf{Дата} \\
+    \hline
+    доцент отделения экспериментальной физики & Семёнов М. Е.\bigstrut & к. ф.-м. н., доцент & & \\ 
+    \hline
+\end{tabularx}
+
+\vspace{2ex}
+
+\begin{tabularx}{\textwidth}
+{|>{\hsize=1.7\hsize}Y|>{\hsize=\hsize}Y|>{\hsize=0.9\hsize}Y|>{\hsize=0.7\hsize}Y|>{\hsize=0.7\hsize}Y|}
+    \multicolumn{5}{l}{Консультант-лингвист отделения иностранных языков ШБИП:} \\
+    \hline
+    \scriptsize \textbf{Должность} 
+        & \scriptsize \textbf{ФИО} 
+        & \scriptsize \textbf{Учёная степень, звание} 
+        & \scriptsize \textbf{Подпись} 
+        & \scriptsize \textbf{Дата} \\
+    \hline
+    старший преподаватель отделения иностранных языков & Смирнова У. А.\bigstrut & & & \\ 
+    \hline
+\end{tabularx}
+
+\vspace{\fill}
+
+\endgroup
+
+\begingroup
+\captionsetup*[figure]{name={Figure}}
+\captionsetup*[table]{name={Table}}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\floatname{algorithm}{Algorithm}
+
+\begin{english}
 \input{Content/EnglishPart.tex}
+\end{english}
+\endgroup

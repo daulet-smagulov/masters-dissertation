@@ -115,12 +115,12 @@ K_1(\zeta) }e^{-\zeta \left[ \sqrt{1+\pi^2}
 \item 
 Будем называть $d$-мерную копулу $C$ \textit{эллиптической}, если функция её распределения удовлетворяет уравнению:
 \begin{equation} \label{EllipCop}
-    C(u_1, u_2, \ldots,u_d|\theta) = F_d(F^{-1}(u_1|\theta),F^{-1}(u_2|\theta), \ldots,F^{-1}(u_d|\theta)|\theta),
+    C(u_1, u_2, \ldots,u_d|\theta) = F(F^{-1}(u_1|\theta),F^{-1}(u_2|\theta), \ldots,F^{-1}(u_d|\theta)|\theta),
 \end{equation}
 \begin{where}
     \item $F(x)$~--- кумулятивная функция маргинального распределения, 
     \item $F^{-1}(p)$~--- обратная функция распределения, 
-    \item $F_d(x_1, x_2, \dots, x_d)$~--- кумулятивная функция $d$-мерного совместного распределения, 
+    \item $F(x_1, x_2, \dots, x_d)$~--- кумулятивная функция $d$-мерного совместного распределения, 
     \item $\theta$~--- вектор параметров.
 \end{where}
 \item $d$-мерная копула $C$ называется \textit{архимедовой}, если функция её распределения удовлетворяет уравнению:
@@ -141,10 +141,10 @@ K_1(\zeta) }e^{-\zeta \left[ \sqrt{1+\pi^2}
 
 В общем случае $d$-мерная Гауссова копула с корреляционным параметром $\rho$ описывается как~\cite{Emb2001}
 \begin{equation} \label{nCop}
-C_{Gauss}(u_1, u_2,\ldots, u_d|\rho) = \Upphi_d \left( \Upphi_1^{-1} (u_1), \Upphi_2^{-1} (u_2), \ldots, \Upphi_d^{-1} (u_d) | \rho \right),
+C_{Gauss}(u_1, u_2,\ldots, u_d|\rho) = \Upphi \left( \Upphi_1^{-1} (u_1), \Upphi_2^{-1} (u_2), \ldots, \Upphi_d^{-1} (u_d) | \rho \right),
 \end{equation}
 \begin{where}
-    \item $\Upphi_d(x_1, x_2, \dots, x_d)$~--- кумулятивная функция $d$-мерного совместного Гауссового распределения,
+    \item $\Upphi(x_1, x_2, \dots, x_d)$~--- кумулятивная функция $d$-мерного совместного Гауссового распределения,
     \item $\Upphi_i^{-1}(p)$~--- обратная функция одномерного Гауссового распределения,
     \item $\rho$~--- корреляционный параметр.
 \end{where}
@@ -153,10 +153,10 @@ C_{Gauss}(u_1, u_2,\ldots, u_d|\rho) = \Upphi_d \left( \Upphi_1^{-1} (u_1), \Upp
 
 В общем случае $d$-мерная $t$-копула с корреляционным параметром $\rho$ и числом степеней свободы $\nu$ описывается как~\cite{Emb2001}
 \begin{equation} \label{tCop}
-C_{t}(u_1, u_2,\ldots, u_d|\rho, \nu) = t_d \left( t_1^{-1} (u_1|\nu), t_2^{-1} (u_2|\nu), \ldots, t_d^{-1} (u_d|\nu) | \rho, \nu \right),
+C_{t}(u_1, u_2,\ldots, u_d|\rho, \nu) = t \left( t_1^{-1} (u_1|\nu), t_2^{-1} (u_2|\nu), \ldots, t_d^{-1} (u_d|\nu) | \rho, \nu \right),
 \end{equation}
 \begin{where}
-    \item $t_d(x_1, x_2, \dots,x_d)$~--- кумулятивная функция $d$-мерного совместного $t$\-распределения,
+    \item $t(x_1, x_2, \dots,x_d)$~--- кумулятивная функция $d$-мерного совместного $t$\-распределения,
     \item $t^{-1}(p)$~--- обратная функция одномерного $t$-распределения,
     \item $\rho$~--- корреляционный параметр,
     \item $\nu \ge 2$~--- число степеней свободы.

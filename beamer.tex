@@ -15,7 +15,7 @@
     \end{columns}
  }{Смагулов Даулет, Семёнов Михаил}
 }
-\institute{Томкий политхенический университет}
+\institute{Томcкий политехнический университет}
 \date{\today}
 
 \begin{document}
@@ -29,333 +29,373 @@
 
 \section{Цели и задачи}
 
-\begin{frame}{\insertsection}
+\begin{frame}{{}}
+    \framesubtitle{\insertsection}
     \textbf{Цель работы:} построить систему оценивания риска с использованием копулярных моделей.
     \vskip 2ex
     \textbf{Задачи:}
     \begin{itemize}
-        \item проанализовать сущестующие подходы и выбрать метод для оценки параметров копулярных моделей.
+        \item проанализовать существующие подходы и выбрать метод для оценки параметров копулярных моделей.
         \item с использованием копулярных моделей вычислить и сравнить поведение различных мер риска (VaR, CVaR) для инвестиционного портфеля.
     \end{itemize}
 \end{frame}
 
-\section{Введение}
-\subsection{Что такое копула}
-
-\begin{frame}
-    \frametitle{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{columns}
-        \column{.5\linewidth}
-        \begin{block}{Определение}
-            \textbf{Копула} -- многомерная функция распределения, обладающая следующими свойствами: 
-            \begin{itemize}
-                \item область определения -- единичный гиперкуб размерности $d$ -- $[0, 1]^d$;
-                \item маргинальные (частные) распределения равномерны на отрезке $[0, 1]$.
-            \end{itemize}
-        \end{block}
-        \column{.5\linewidth}
-            \begin{figure}
-                \centering \includegraphics[height=0.5\paperheight]{Copula-example.pdf}
-                \caption{Гауссова копула доходностей RTS и SBRF}
-                \label{fig:copulaExample}
-            \end{figure}
-    \end{columns}
-\end{frame}
-
-\subsection{Теорема Шкляра}
+\section{Основные определения}
+\subsection{Копула-функция}
 
 \begin{frame}{\insertsection}
     \framesubtitle{\insertsubsection}
-    \cite{Sklar1959} \\
-    Для произвольной $d$-мерной функции распределения $F(x_1,\ldots,x_d)$ с одномерными маргинальными функциями распределения $F_1(x_1), \ldots, F_d(x_d)$ существует копула $C$, такая что
-    $$F(x_1,\ldots,x_d) = C(F_1(x_1), \ldots, F_d(x_d)).$$
-    \pause
-    Таким образом, понятие \textit{копулы} позволяет нам рассматривать информацию о маргинальных распределениях и зависимости между переменными отдельно друг от друга.
+   % \cite{Sklar1959} \\
+    \textbf{Теорема Шкляра.} Для произвольной $d$-мерной функции распределения $F(x_1, x_2,\ldots, x_d)$ с одномерными частными (маргинальными) функциями распределения $F_1(x_1)$, $F_1(x_2)$, $\ldots$, $F_d(x_d)$ существует \textit{копула-функция} $C(\cdot)$, такая что
+    $F(x_1, x_2,\ldots, x_d) = C(F_1(x_1), F_2(x_2),\ldots, F_d(x_d))$, $\textbf{x}=(x_1, x_2, \ldots, x_d) \in \mathbb{R}^d$.
+    \vskip 2ex
+    \textbf{Свойства копула-функции}: 
+    \begin{itemize}
+        \item область определения~--- $\mathbb{R}^d=[0, 1]^d$~--- единичный гиперкуб;
+        \item маргинальные (частные) распределения равномерны на отрезке $[0, 1]$.
+    \end{itemize}
 \end{frame}
 
-\section{Методология}
-\subsection{Подготовка данных}
+\subsection{Эллиптические копулы}
 
 \begin{frame}{\insertsection}
     \framesubtitle{\insertsubsection}
-    Цены активов преобзовываются в логарифмические доходности:
     \begin{equation}
-        r_{t,i}=\log \frac{p_{t,i}}{p_{t-1,i}},
+        C(u_1, u_2, \ldots, u_d | \theta) = F(F_1^{-1}(u_1), F_2^{-1}(u_2), \ldots, F_d^{-1}(u_d) | \theta),
     \end{equation}
     где
     \begin{itemize}
-        \item $i \in \overline{1, d}$, $d$ -- число активов;
-        \item $p_{t, i}$ -- цена $i$-го актива на момент $t$, $t\in \overline{1, T}$.
+        \item $F_i(x)$~--- кумулятивная функция маргинального распределения, 
+        \item $F_i^{-1}(p)$~--- обратная функция распределения,
+        \item $F(x_1, x_2, \dots, x_d)$~--- функция $d$-мерного совместного распределения, 
+        \item $\theta$~--- вектор параметров.
     \end{itemize}
+        \vskip 2ex
+    В работе использованы Гауссова и Стьюдента $t$ копулы.
 \end{frame}
+
+\subsection{Архимедовы копулы}
 
 \begin{frame}{\insertsection}
     \framesubtitle{\insertsubsection}
-    Коэффициент ранговой корреляции Кендалла \cite{Kendall1970}:
     \begin{equation}
-        \tau = r \big( \text{sgn} (X_a - X_b), \text{sgn} (Y_a - Y_b) \big),
+        C(u_1,u_2,\ldots,u_d|\theta) = \psi^{[-1]}(\psi(u_1|\theta)+\psi(u_2|\theta) + \ldots + \psi(u_d|\theta) | \theta ),
     \end{equation}
     где
     \begin{itemize}
-        \item $(X_a, X_b)$ и $(Y_a, Y_b)$ -- независимые пары некоторых случайных величин $X$ и $Y$;
-        \item $r(x, y)$ -- линейная корреляция Пирсона.
+        \item $\psi$: $[0,1] \rightarrow [0, \infty]$~--- непрерывная строго убывающая выпуклая функция (\textit{функция-генератор}) такая, что $\psi(1) = 0$;
+        \item $\psi^{[-1]}(p)$~--- псевдо-обратная функция, определяемая из уравнения:
+        $$\psi^{[-1]}(p) = \left\{ \begin{aligned}
+            & \psi^{-1}(p), & \ 0 \le p & \le \psi(0), \\
+            & 0,            & \ \psi(0) \le p & \le \infty.
+        \end{aligned} \right.$$
     \end{itemize}
+    В работе использованы копулы Клейтона, Гумбеля, Франка, а также независимая копула.
 \end{frame}
 
-\subsection{Маргинальные распределения}
+\subsection{Иерархическая копула}%~\cite{Bedfort2002}
 
 \begin{frame}{\insertsection}
     \framesubtitle{\insertsubsection}
-    Чтобы отразить такие свойства финансовых временных рядов, как \textit{тяжёлые хвосты} или \textit{асимметрия}, для описания лог-доходностей были выбраны следующие маргинальные распределения:
-    \begin{itemize}
-        \item<2-> гиперболическое;
-        \item<3-> устойчивое;
-        \item<4-> Мейкснера.
-    \end{itemize}
+    Будем называть $d$-мерной \textit{иерархической копулой} функцию, построенную из $d(d - 1)/2$  двумерных (парных) копул. 
+        \vskip 2ex
+    Структура копула-функции определяется набором связанных деревьев $\mathcal{V} =\{T_1, T_2, \ldots, T_ {d-1}\}$ по следующим правилам~\cite{Czado2010}:
+    \begin{enumerate}[(1)]
+        \item $T_1 = (V_1, E_1)$~--- дерево дерево с узлами $V_1 = \{1, 2, \ldots, d\}$ и ребрами $E_1$. 
+        Это дерево является графом, в котором любые два узла связаны уникальной ветвью.
+        \item Для $m = 2, 3,\ldots, d - 1$ дерево $T_m$ состоит из узлов $V_m = E_{m-1}$ и ребер $E_m$.
+        \item Для $m = 2, 3,\ldots, d - 1$ два узла дерева $T_m$ могут быть связаны ребром только в случае, если соответствующие ребра дерева $T_{m-1}$ имеют общий узел.
+    \end{enumerate}
 \end{frame}
+
+\subsection{Меры риска}
 
 \begin{frame}{\insertsection}
     \framesubtitle{\insertsubsection}
-    \begin{block}{Гиперболическое распределение}
-    Функция плотности гиперболического распределения \cite{Barndoff1983}:
+    Value-at-Risk (\textit{VaR})~--- минимальное значение потерь портфеля, которое не будет превышено с заданной вероятностью $\alpha$:
     \begin{equation}
-        f_H(x|\pi,\zeta,\delta,\mu) = \frac{1}{2 \sqrt{1+\pi^2} K_1(\zeta)} e^{-\zeta \left[ \sqrt{1+\pi^2} \sqrt{1 + \big( \frac{x - \mu}{\delta})^2} - \pi \frac{x - \mu}{\delta} \right]},
+        \textit{VaR}_\alpha = \min\left\{\zeta \in \mathbb{R}|P(\xi \le \zeta) \ge \alpha \right\}.
+    \end{equation}
+    Conditional-Value-at-Risk (\textit{CVaR})~--- ожидаемое (среднее) значение потерь, которые не будут превышены с заданной вероятностью $\alpha$:
+    \begin{equation}
+        \textit{CVaR}_\alpha = \mathbb{E}\left\{-\mu_p | -\mu_p \ge VaR_\alpha \right\},
     \end{equation}
     где
     \begin{itemize}
-        \item $K_1(x)$ -- модифицированная функция Бесселя третьего рода 1-го порядка~\cite{Bessel1824}, 
-        \item $\pi \in \mathbb{R}$, $\zeta > 0$, $\delta > 0$, $\mu \in \mathbb{R}$.
+        \item $\zeta$~--- некоторое значение случайной величины $\xi$,
+        \item $\mu_p$~--- ожидаемая доходность портфеля.
     \end{itemize}
+\end{frame}
+
+\section{Исходные данные}
+
+\begin{frame}{{\insertsection}~--- фьючерсные контракты}
+    \framesubtitle{декабрь 2015 -- декабрь 2017 (504 наблюдения)}
+    \begin{table}
+        \centering
+        \caption{Описательные характеристики логарифмических доходностей}
+        \begin{adjustbox}{max width=\textwidth}
+        \begin{tabular}{l|cc|rrrr}
+            \toprule
+            \multirow{2}{*}{Активы} 
+                & \multicolumn{2}{c|}{Моменты} 
+                & \multicolumn{4}{c}{$\tau$ Кендалла} \\
+            & $\mu$ & $\sigma$ & \multicolumn{1}{c}{RTS} & \multicolumn{1}{c}{SBRF} 
+                & \multicolumn{1}{c}{GAZR} & \multicolumn{1}{c}{GMKR} \\ 
+            \midrule
+            RTS  &  0.00075 & 0.016 &     1 & 0.515 & 0.444 & 0.218 \\
+            SBRF &  0.00154 & 0.016 & 0.515 &     1 & 0.364 & 0.208 \\
+            GAZR & -0.00001 & 0.013 & 0.444 & 0.364 &     1 & 0.256 \\
+            GMKR &  0.00033 & 0.015 & 0.218 & 0.208 & 0.256 &     1 \\    
+            \bottomrule
+        \end{tabular}
+        \end{adjustbox}
+    \end{table}
+    Цены активов преобразованы в логарифмические доходности:
+    \begin{equation}
+        r_{t,i} = \log \frac{p_{t,i}}{p_{t-1,i}},
+    \end{equation}
+    где $i \in \overline{1, d}$, $d$~--- число активов; $p_{t, i}$~--- цена $i$-го актива на момент $t$, $t\in \overline{1, T}$.
+\end{frame}
+
+%\begin{frame}{\insertsection}
+%    \framesubtitle{\insertsubsection}
+%    Цены активов преобразованы в логарифмические доходности:
+%    \begin{equation}
+%        r_{t,i}=\log \frac{p_{t,i}}{p_{t-1,i}},
+%    \end{equation}
+%    где
+%    \begin{itemize}
+%        \item $i \in \overline{1, d}$, $d$~--- число активов;
+%        \item $p_{t, i}$~--- цена $i$-го актива на момент $t$, $t\in \overline{1, T}$.
+%    \end{itemize}
+%\end{frame}
+
+
+%\begin{frame}{\insertsection}
+%    \framesubtitle{\insertsubsection}
+%    Коэффициент ранговой корреляции Кендалла \cite{Kendall1970}:
+%    \begin{equation}
+%        \tau = r \big( \text{sgn} (X_a - X_b), \text{sgn} (Y_a - Y_b) \big),
+%    \end{equation}
+%    где
+%    \begin{itemize}
+%        \item $(X_a, X_b)$ и $(Y_a, Y_b)$~--- независимые пары некоторых случайных величин $X$ и $Y$;
+%        \item $r(x, y)$~--- линейная корреляция Пирсона.
+%    \end{itemize}
+%\end{frame}
+
+%\subsection{Маргинальные распределения}
+
+%\begin{frame}{\insertsection}
+%    \framesubtitle{\insertsubsection}
+%    \begin{block}{Оценка параметров распределений (фитинг)}
+%        Оценка параметров гиперболического распределения была произведена методом Нелдера\,--\,Мида, устойчивого и Мейкснера~--- методом дистанции Крамера\,--\,фон~Мизеса.
+%    \end{block}
+%    \begin{block}{Проверка качества фитинга распределений}
+%        Качество оценки было определено с помощтю тестов Колмогорова\,--\,Смирнова, Андерсона\,--\,Дарлинга и Крамера\,--\,фон~Мизеса.
+%    \end{block}
+%\end{frame}
+
+\section{Двухэтапная оценка максимального правдоподобия}
+\subsection{Оценка параметров маргинальных распределений}
+
+\begin{frame}{{\insertsection} (этап 1)}
+    \framesubtitle{\insertsubsection}
+    \begin{table}
+        \centering
+        \footnotesize
+        \caption{Оценка параметров маргинальных распределений (кандидаты)}
+        \begin{tabularx}{\textwidth}
+        {>{\hsize=2.4\hsize}X >{\hsize=0.4\hsize}Y *{4}{>{\hsize=0.8\hsize}R}}
+        \hline 
+        \multicolumn{2}{c}{Распределения и параметры} & \multicolumn{1}{r}{RTS} &
+        \multicolumn{1}{r}{SBRF} & \multicolumn{1}{r}{GAZR} &
+        \multicolumn{1}{r}{GMKR} \\ 
+        \hline
+        \multirow{4}{*}{\parbox{\hsize}{Гиперболическое\\ распределение}}
+            &    $\pi$ &    0.00336 &    0.06100 &    0.06751 &    0.03301 \\
+            &  $\zeta$ &    0.68417 &    0.80977 &    0.73310 &    3.31449 \\
+            & $\delta$ &    0.00694	&    0.00823 &    0.00609 &    0.02232 \\
+            &    $\mu$ &    0.00067 & $-$0.00003 & $-$0.00139 & $-$0.00076 \\ \hline
+        \multirow{4}{*}{\parbox{\hsize}{Устойчивое распределение}}
+            & $\alpha$ &    1.53561 &    1.56414 &    1.86326 &    1.92994 \\
+            &  $\beta$ &    0.21114 &    0.22262 &    0.85066 &    0.66465 \\
+            & $\gamma$ &    0.00884 &    0.00926 &    0.00770 &    0.00999 \\
+            & $\delta$ &    0.00020 &    0.00063 & $-$0.00099 & $-$0.00016 \\ \hline
+        \multirow{4}{*}{\parbox{\hsize}{\textbf{Распределение Мейкснера}}}
+            & $\alpha$ &    0.03306 &    0.03064 &    0.02642 &    0.00428 \\
+            &  $\beta$ &    0.30800 &    0.45599 &    0.22236 &    0.87412 \\
+            & $\delta$ &    0.44168 &    0.51881 &    0.47397 &   18.31193 \\
+            &    $\mu$ & $-$0.00099 & $-$0.00173 & $-$0.00143 & $-$0.03615 \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{frame}
+
+% \begin{frame}{\insertsection}
+%     \framesubtitle{\insertsubsection}
+%     \begin{table}
+%     \centering
+%     \caption{Значения $p$-value статистических тестов для распределений-кандидатов}
+%     \label{tab:margintest}
+%     \begin{tabularx}{\textwidth}
+%     {>{\hsize=1.6\hsize}X >{\hsize=1.6\hsize}X *{4}{>{\hsize=0.7\hsize}Y}}
+%     \toprule
+%     \multicolumn{1}{c}{Тест} & \multicolumn{1}{c}{Распределение} & RTS & SBRF & GAZR & GMKR \bigstrut \\ %\midrule[1pt]
+%     \multirow{3}{*}{\parbox{\hsize}{Колмогорова\,--\,Смирнова}}
+%         & Гиперболическое & 0.91 & 0.88 & 1.00 & 0.79 \\
+%         & Устойчивое      & 0.89 & 0.94 & 0.87 & 0.94 \\
+%         & Мейкснера       & 0.99 & 0.95 & 1.00 & 0.96 \\ \midrule
+%     \multirow{3}{*}{\parbox{\hsize}{Андерсона\,--\,Дарлинга}}
+%         & Гиперболическое & 0.88 & 0.94 & 1.00 & 0.93 \\
+%         & Устойчивое      & 0.73 & 0.87 & 0.47 & 0.97 \\
+%         & Мейкснера       & 0.87 & 0.92 & 1.00 & 0.90 \\ \midrule
+%     \multirow{3}{*}{\parbox{\hsize}{Крамера\,--\,фон~Мизеса}}
+%         & Гиперболическое & 0.94 & 0.89 & 1.00 & 0.90 \\
+%         & Устойчивое      & 0.97 & 0.92 & 0.94 & 0.98 \\
+%         & Мейкснера       & 0.99\cellcolor{gray!33} & 0.95\cellcolor{gray!33} & 1.00\cellcolor{gray!33} & %0.98\cellcolor{gray!33} \\ \bottomrule
+%     \end{tabularx}
+%     \end{table}
+% \end{frame}
+
+% \begin{frame}{\insertsection}
+%     \framesubtitle{\insertsubsection}
+%     \begin{block}{Гауссова копула}
+%         \begin{equation}
+%             C_{Gauss}(u_1, u_2,\ldots, u_d|\rho) = \Phi \left( \Phi_1^{-1} (u_1), \Phi_2^{-1} (u_2), \ldots, \Phi_d^{-1} (u_d) | \Sigma \right),
+%         \end{equation}
+%         где
+%         \begin{itemize}
+%             \item $\Phi(x_1, x_2, \dots, x_d)$~--- кумулятивная функция $d$-мерного совместного Гауссового %распределения,
+%             \item $\Phi_i^{-1}(p)$~--- обратная функция одномерного Гауссового распределения,
+%             \item $\Sigma$~--- корреляционная матрица.
+%         \end{itemize} 
+%     \end{block}
+% \end{frame}
+
+% \begin{frame}{\insertsection}
+%     \framesubtitle{\insertsubsection}
+%     \begin{block}{Копула $t$\,--\,Стьюдента}
+%         \begin{equation} \label{tCop}
+%             C_{t}(u_1, u_2,\ldots, u_d|\Sigma, \nu) = t \left( t_1^{-1} (u_1|\nu), t_2^{-1} (u_2|\nu), \ldots, t_d^{-1} (u_d|\nu) | \Sigma, \nu \right),
+%         \end{equation}
+%         где
+%         \begin{itemize}
+%             \item $t_d(x_1, x_2, \dots,x_d)$~--- кумулятивная функция $d$-мерного совместного $t$-распределения,
+%             \item $t^{-1}(p)$~--- обратная функция одномерного $t$-распределения,
+%             \item $\Sigma$~--- корреляционная матрица,
+%             \item $\nu \ge 2$~--- число степеней свободы.
+%         \end{itemize}
+%     \end{block}
+% \end{frame}
+
+% \begin{frame}{\insertsection}
+%     \framesubtitle{\insertsubsection}
+%     \begin{block}{Функция плотности иерархической копулы}
+%         Пусть $c_{j_e, k_e; D_e}$~--- двумерная (парная) копула для каждого ребра $e$ в некотором из $(d - 1)$ деревьев вайн-копулы~\cite{Czado2010}. 
+%         Обозначим через $j_e$ и $k_e$ индексы условных переменных $U_{j_e}$ и $U_{k_e}$. 
+%         Также обозначим через $D_e$ условную выборку, соответствующую ребру $e$. 
+%         Таким образом, $c_{j_e, k_e; D_e}$~--- копул-функция плотности распределения для двух случайных величин $U_{j_e|D_e}$ и $U_{k_e|D_e}$, где $U_{i|D} = C_{i|D} (U_i|U_D)$. 
+%         Окончательно, приведем функцию плотности для регулярной иерархической копулы в виде:
+%         \begin{equation}
+%             c(u_1, \ldots, u_d) = \prod_{m=1}^{d-1} \prod_{e \in E_m} c_{j_e,k_e;D_e} \left( C_{j_e|D_e} (u_{j_e}|\textbf{u}_{D_e}), C_{k_e|D_e} (u_{k_e}|\textbf{u}_{D_e}); \textbf{u}_{D_e} \right).
+%         \end{equation}
+%     \end{block}
+% \end{frame}
+
+% \begin{frame}{\insertsection}
+%   \framesubtitle{\insertsubsection}
+%   \begin{block}{Оценка параметров копул}
+%       Для оценки параметров копул необходимо исходный ряд лог-доходностей $\boldsymbol{r}_i = (r_{1,i}, \ldots, r_{T,i})^\intercal$ для всех исторических наблюдений каждого актива $i \in \overline{1,d}$ преобразовать в псевдо-наблюдения $\boldsymbol{u}_i$ по следующей формуле:
+%       \begin{equation}
+%           u_{t,i} = \frac{\text{rg}(r_{t,i})}{T + 1},\ \forall \ t \in \overline{1,T},\ i \in \overline{1,d},
+%       \end{equation}
+%       где
+%       \begin{itemize}
+%           \item $\text{rg}(r_{t,i})$~--- ранг $r_{t,i}$ (от наименьшего к наибольшему) по отношению к наблюдаемым значениям $r_{\tau,i}, \tau \in \overline{1,T}$.
+%       \end{itemize}
+%       По вычисленным псевдо-наблюдениям методом <<инверсии $\tau$ Кендалла>>~\cite{Koj2010} были оценены параметры копул.
+%     \end{block}
+% \end{frame}
+
+\subsection{Оценка параметров эллиптических копула-функций}
+
+\begin{frame}{{\insertsection} (этап 2)}
+    \framesubtitle{\insertsubsection}
+    \begin{equation} \label{tcopfit}
+       \Sigma_{Gauss} = \Sigma_t = \left(
+        \begin{array}{cccc}
+            1 & & & \\
+            0.723 & 1 & & \\
+            0.642 & 0.540 & 1 & \\
+            0.335 & 0.320 & 0.391 & 1
+        \end{array} \right), \ \nu = 4.
+    \end{equation}
+    \begin{table}
+    \centering
+    \caption{Значения статистических критериев для копулярных моделей}
+    \label{tab:coptest}
+    \setlength{\tabcolsep}{8pt}
+    \begin{tabular}{lrr}
+    \toprule
+    Копула & Статистика & $p$-value \\ \midrule
+    Гауссова  & $S_n=0,034$ & 0,19 \\
+    Стьюдента & $S_n=0,391$ & 0,05 \\
+    R-vine    & $W=15,15$   & 0,95    \\ \bottomrule
+    \end{tabular}
+    \end{table}
+\end{frame}
+
+\subsection{Оценка параметров иерархической копулы}
+
+\begin{frame}{{\insertsection} (этап 2)}
+    \framesubtitle{\insertsubsection}
+    \begin{block}{Структура деревьев}
+    \begin{figure}
+        \centering
+        \includegraphics[height=0.5\paperheight]{Trees.png}
+        \caption{Объединение парных копул (слева-направо)}
+    \end{figure}
     \end{block}
 \end{frame}
 
 \begin{frame}{\insertsection}
     \framesubtitle{\insertsubsection}
-    \begin{block}{Устойчивое распределение}
-    Характеристическая функция устойчивого распределения~\cite{Nolan2009}:
+    \begin{enumerate}[(1)]
+        \item Дерево 1:\\
+        $c_{u_1;u_2}$~--- копула Стьюдента с параметрами $\rho=0.72$, $\nu=7.57$, $\tau=0.51$;\\
+        $c_{u_3;u_1}$~--- копула Survival BB1 (повёрнутая на $180^{\circ}$ копула Клейтона-Гумбеля) с параметрами $\theta=0.12$, $\delta=1.68$, $\tau=0.44$;\\
+        $c_{u_4;u_3}$~--- копула Survival Gumbel (повёрнутая на $180^{\circ}$ копула Гумбеля) с параметрами $\delta=1.33$, $\tau=0.25$;
+        \item Дерево 2:\\
+        $c_{u_3,u_2;u_1}$~--- копула Гумбеля с параметрами $\delta=1.1$, $\tau=0.09$;\\
+        $c_{u_4,u_1;u_3}$~--- копула Клейтона с параметрами $\delta=0.16$, $\tau=0.07$;
+        \item Дерево 3:\\
+        $c_{u_4,u_2;u_3,u_1}$~--- копула Франка с параметрами $\delta=0.54$, $\tau=0.06$.
+    \end{enumerate}
+\end{frame}
+
+\section{Формирование инвестиционного портфеля}
+\subsection{Задача оптимизации}
+
+\begin{frame}{\insertsection}
+    \framesubtitle{\insertsubsection}
     \begin{eqnarray}
-        \varphi_S(x|\alpha,\beta,\gamma,\delta) &=& \exp{\left[ix\delta-|\gamma x|^\alpha \left(1 - i\beta\text{sgn}(x)\Phi(x)\right)\right]}, \\
-        \Phi(x) &=& \left\{ \begin{aligned}
-            & \left(|\gamma x|^{1-\alpha} - 1\right)\tan{\frac{\pi\alpha}{2}}, & & \alpha \ne 1, \\
-            & -\frac{2}{\pi}\log{|\gamma x|}, & & \alpha = 1,
-        \end{aligned} \right. \nonumber
+        \underset{\textbf{w}}{\text{minimize}} & & \textit{CVaR}_\alpha \\
+        \text{subject to} & & \sum_{i=1}^d \mu_i w_i \ge \bar{\mu}_p \nonumber \\
+        & & \sum_{i=1}^d w_i = 1 \nonumber \\
+        & & w_i \ge 0. \nonumber
     \end{eqnarray}
-    где
-    \begin{itemize}
-        \item $\alpha \in (0;\ 2]$, $\beta \in [-1;\ 1]$, $\gamma > 0$, $\delta \in \mathbb{R}$, 
-        \item $i$ -- мнимая единица.
-    \end{itemize}
-    \end{block}
+Решение: $\textbf{w}=\{0,050; 0,114; 0,384; 0,452\}$.
 \end{frame}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Распределение Мейкснера}
-    Функция плотности распределения Мейкснера \cite{Schoutens2002}:
-    \begin{equation}
-        f_M(x|\alpha,\beta,\delta,\mu) = \frac{ \left( 2 \cos{ \frac{\beta}{2}} \right)^{2 \delta}}{2 \alpha \pi \Gamma(2 \delta)} \exp{\frac{\beta(x - \mu)}{\alpha}} \left| \Gamma \left( \delta + i \frac{x - \mu}{\alpha} \right) \right|^2,
-    \end{equation}
-    где
-    \begin{itemize}
-        \item $\Gamma(z)$ -- гамма-функция с комплексным аргументом $z$, 
-        \item $\alpha > 0$, $|\beta| < \pi$, $\delta > 0$, $\mu \in \mathbb{R}$.
-    \end{itemize}
-    \end{block}
-\end{frame}
+\section{Расчёт риск-метрик с использованием копул}
+\subsection{Расчёт точечных оценок риск-метрик}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Оценка параметров распределений (фитинг)}
-        Оценка параметров гиперболического распределения была произведена методом Нелдера\,--\,Мида, устойчивого и Мейкснера -- методом дистанции Крамера\,--\,фон~Мизеса.
-    \end{block}
-    \begin{block}{Проверка качества фитинга распределений}
-        Качество оценки было определено с помощтю тестов Колмогорова\,--\,Смирнова, Андерсона\,--\,Дарлинга и Крамера\,--\,фон~Мизеса.
-    \end{block}
-\end{frame}
-
-\subsection{Копулярные функции}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Эллиптические копулы}
-        \begin{equation}
-            C(u_1, u_2, \ldots, u_d | \theta) = F_d(F^{-1}(u_1 | \theta), F^{-1}(u_2 | \theta), \ldots, F^{-1}(u_d | \theta) | \theta),
-        \end{equation}
-        где
-        \begin{itemize}
-            \item $F(x)$ -- кумулятивная функция маргинального распределения, 
-            \item $F^{-1}(p)$ -- обратная функция распределения, 
-            \item $F_d(x_1, x_2, \dots, x_d)$ -- функция $d$-мерного совместного распределения, 
-            \item $\theta$ -- вектор параметров.
-        \end{itemize}
-        В работе использовались такие виды эллиптических копул, как Гауссова и Стьюдента $t$.
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Архимедовы копулы}
-        \begin{equation}
-            C(u_1,u_2,\ldots,u_d|\theta) = \psi^{[-1]}(\psi(u_1|\theta)+\psi(u_2|\theta) + \ldots + \psi(u_d|\theta) | \theta ),
-        \end{equation}
-        где
-        \begin{itemize}
-            \item $\psi$: $[0,1] \rightarrow [0, \infty]$ -- непрерывная строго убывающая выпуклая функция такая, что $\psi(1) = 0$, также называемая \textit{функцией-генератором};
-            \item $\psi^{[-1]}(p)$ -- псевдо-обратная функция, определяемая из уравнения:
-            $$\psi^{[-1]}(p) = \left\{ \begin{aligned}
-                & \psi^{-1}(p), & \ 0 \le p & \le \psi(0), \\
-                & 0,            & \ \psi(0) \le p & \le \infty.
-            \end{aligned} \right.$$
-        \end{itemize}
-        В данной работе использовались архимедовы копулы Клейтона, Гумбеля, Франка, а также независимая копула.
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Гауссова копула}
-        \begin{equation}
-            C_{Gauss}(u_1, u_2,\ldots, u_d|\rho) = \Phi \left( \Phi_1^{-1} (u_1), \Phi_2^{-1} (u_2), \ldots, \Phi_d^{-1} (u_d) | \Sigma \right),
-        \end{equation}
-        где
-        \begin{itemize}
-            \item $\Phi(x_1, x_2, \dots, x_d)$  -- кумулятивная функция $d$-мерного совместного Гауссового распределения,
-            \item $\Phi_i^{-1}(p)$ -- обратная функция одномерного Гауссового распределения,
-            \item $\Sigma$ -- корреляционная матрица.
-        \end{itemize} 
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Копула $t$\,--\,Стьюдента}
-        \begin{equation} \label{tCop}
-            C_{t}(u_1, u_2,\ldots, u_d|\Sigma, \nu) = t \left( t_1^{-1} (u_1|\nu), t_2^{-1} (u_2|\nu), \ldots, t_d^{-1} (u_d|\nu) | \Sigma, \nu \right),
-        \end{equation}
-        где
-        \begin{itemize}
-            \item $t_d(x_1, x_2, \dots,x_d)$ -- кумулятивная функция $d$-мерного совместного $t$-распределения,
-            \item $t^{-1}(p)$ -- обратная функция одномерного $t$-распределения,
-            \item $\Sigma$ -- корреляционная матрица,
-            \item $\nu \ge 2$ -- число степеней свободы.
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Определение}
-        Будем называть $d$-мерной \textit{иерархической копулой} функцию, построенную из $d(d - 1)/2$  двумерных (парных) копул~\cite{Bedfort2002}. 
-        Структура этой функции определяется набором связанных деревьев $\mathcal{V} =\{T_1, T_2, \ldots, T_ {d-1}\}$ по следующим правилам:
-        \begin{enumerate}[(1)]
-            \item $T_1 = (V_1, E_1)$ -- дерево дерево с узлами $V_1 = \{1, 2, \ldots, d\}$ и ребрами $E_1$. 
-            Это дерево является графом, в котором любые два узла связаны уникальной ветвью.
-            \item Для $m = 2, 3,\ldots,d - 1$ дерево $T_m$ состоит из узлов $V_m = E_{m-1}$ и ребер $E_m$.
-            \item Для $m = 2, 3,\ldots, d - 1$ два узла дерева $T_m$ могут быть связаны ребром только в случае, если соответствующие ребра дерева $T_{m-1}$ имеют общий узел~\cite{Czado2010}.
-        \end{enumerate}
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Функция плотности иерархической копулы}
-        Пусть $c_{j_e, k_e; D_e}$ -- двумерная (парная) копула для каждого ребра $e$ в некотором из $(d - 1)$ деревьев вайн-копулы~\cite{Czado2010}. 
-        Обозначим через $j_e$ и $k_e$ индексы условных переменных $U_{j_e}$ и $U_{k_e}$. 
-        Также обозначим через $D_e$ условную выборку, соответствующую ребру $e$. 
-        Таким образом, $c_{j_e, k_e; D_e}$ -- копул-функция плотности распределения для двух случайных величин $U_{j_e|D_e}$ и $U_{k_e|D_e}$, где $U_{i|D} = C_{i|D} (U_i|U_D)$. 
-        Окончательно, приведем функцию плотности для регулярной иерархической копулы в виде:
-        \begin{equation}
-            c(u_1, \ldots, u_d) = \prod_{m=1}^{d-1} \prod_{e \in E_m} c_{j_e,k_e;D_e} \left( C_{j_e|D_e} (u_{j_e}|\textbf{u}_{D_e}), C_{k_e|D_e} (u_{k_e}|\textbf{u}_{D_e}); \textbf{u}_{D_e} \right).
-        \end{equation}
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Оценка параметров копул}
-        Для оценки параметров копул необходимо исходный ряд лог-доходностей $\boldsymbol{r}_i = (r_{1,i}, \ldots, r_{T,i})^\intercal$ для всех исторических наблюдений каждого актива $i \in \overline{1,d}$ преобразовать в псевдо-наблюдения $\boldsymbol{u}_i$ по следующей формуле:
-        \begin{equation}
-            u_{t,i} = \frac{\text{rg}(r_{t,i})}{T + 1},\ \forall \ t \in \overline{1,T},\ i \in \overline{1,d},
-        \end{equation}
-        где
-        \begin{itemize}
-            \item $\text{rg}(r_{t,i})$ -- ранг $r_{t,i}$ (от наименьшего к наибольшему) по отношению к наблюдаемым значениям $r_{\tau,i}, \tau \in \overline{1,T}$.
-        \end{itemize}
-        По вычисленным псевдо-наблюдениям методом <<инверсии $\tau$ Кендалла>>~\cite{Koj2010} были оценены параметры копул.
-    \end{block}
-\end{frame}
-
-\subsection{Оптимизация портфеля}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Определение}
-        Value-at-Risk (\textit{VaR}) -- минимальное значение потерь портфеля, которое не будет превышено с заданной вероятностью:
-        \begin{equation}
-            \textit{VaR}_\alpha = \min\left\{\zeta \in \mathbb{R}|P(\xi \le \zeta) \ge \alpha \right\},
-        \end{equation}
-        где
-        \begin{itemize}
-            \item $\zeta$ -- некоторое значение случайной величины $\xi$,
-            \item $\mu_p$ -- ожидаемая доходность портфеля.
-            \item $\alpha$ -- заданная вероятность, или уровень.
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Определение}
-        Conditional-Value-at-Risk (\textit{CVaR}) -- ожидаемое (среднее) значение потерь, которые не будут превышены с заданной вероятностью.
-        \begin{equation}
-            \textit{CVaR}_\alpha = \mathbb{E}\left\{-\mu_p | -\mu_p \ge VaR_\alpha \right\},
-        \end{equation}
-        где
-        \begin{itemize}
-            \item $\mu_p$ -- ожидаемая доходность портфеля.
-            \item $\alpha$ -- заданная вероятность, или уровень.
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Задача оптимизации}
-        \begin{eqnarray}
-            \underset{\textbf{w}}{\text{minimize}} & & \textit{CVaR}_\alpha \\
-            \text{subject to} & & \sum_{i=1}^d \mu_i w_i \ge \bar{\mu}_p \nonumber \\
-            & & \sum_{i=1}^d w_i = 1 \nonumber \\
-            & & w_i \ge 0. \nonumber
-        \end{eqnarray}
-    \end{block}
-\end{frame}
-
-\subsection{Алгоритм вычисления мер риска}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Вход}
-        \begin{itemize}
-            \item Лог-доходности $\{r_{i,t}\}$, $i \in \overline{1,d}$,
-            \item весовые коэффициенты $w_i$ оптимального портфеля, 
-            \item маргинальные распределения и параметры для каждого актива, 
-            \item $d$-мерная копула с известными параметрами,
-            \item уровень $\alpha$.
-        \end{itemize}
-    \end{block}
-    \begin{block}{Выход}
-        \begin{itemize}
-            \item $\textit{VaR}_\alpha$ и $\textit{CVaR}_\alpha$.
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
+\begin{frame}{Алгоритм 1}
     \framesubtitle{\insertsubsection}
     \begin{algorithm}[H]
     \scriptsize
-    \caption{Расчёт риск-метрик с использованием копул}
+  \caption{Расчёт риск-метрик с использованием копул}
     \label{Alg1}
     \begin{algorithmic}[1]
     	\Require Лог-доходности $\{r_{i,t}\}$, $i \in \overline{1,d}$, весовые коэффициенты $w_i$, маргиналы и их параметры, $d$-мерная копула и её параметры, уровень $\alpha$.
@@ -378,11 +418,13 @@
     \end{algorithm}
 \end{frame}
 
-\begin{frame}{\insertsection}
+\subsection{Расчёт интервальных оценок риск-метрик}
+
+\begin{frame}{Алгоритм 2}
     \framesubtitle{\insertsubsection}
     \begin{algorithm}[H]
     \footnotesize
-    \caption{Бутстрап-процедура для оценки риск-метрик}
+   \caption{Бутстрап-процедура для оценки риск-метрик}
     \begin{algorithmic}[1]
     	\Require Число симуляций $N$, входные данные алгоритма~\ref{Alg1}.
     	\State Создать пустые векторы $\textit{VaR}_\alpha$ и $\textit{CVaR}_\alpha$.
@@ -398,295 +440,140 @@
     \end{algorithm}
 \end{frame}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    Формулы для вычисления интервальных характеристик
-    \begin{gather}
-        \bar{x} = \mathbb{E} (\textbf{x}) \approx \frac{1}{N} \sum_{i=1}^N x_i, \hspace{0.5cm}
-        \Delta = \bar{x} - \hat{x}, \label{boot-bias} \nonumber\\
-        \text{SD} = \sqrt{\frac{1}{N-1} \sum_{i=1}^N (\bar{x} - x_i)^2}, \hspace{0.5cm}
-        \text{RMSE} = \sqrt{\frac{1}{N-1} \sum_{i=1}^N (\hat{x} - x_i)^2}.\nonumber
-    \end{gather}
+\begin{frame}{{}}
+    \framesubtitle{Формулы для расчёта интвервальных оценок}
+    \begin{align}
+        & \bar{x} = \mathbb{E} (\textbf{x}) \approx \frac{1}{N} \sum_{i=1}^N x_i, &
+        & \Delta = \bar{x} - \hat{x}, \label{boot-bias} %\nonumber
+        \\
+        & \text{SD} = \sqrt{\frac{1}{N-1} \sum_{i=1}^N (\bar{x} - x_i)^2}, &
+        & \text{RMSE} = \sqrt{\frac{1}{N-1} \sum_{i=1}^N (\hat{x} - x_i)^2}.\nonumber
+    \end{align}
     Формулы для вычисления доверительного интервала:
     \begin{equation}
-        q^- = \mathbb{Q}_{\textbf{x}} (0.025), \ q^+ = \mathbb{Q}_{\textbf{x}} (0.975),\nonumber
+        q^- = \mathbb{Q}_{\textbf{x}} (0.025), \ q^+ = \mathbb{Q}_{\textbf{x}} (0.975) %\nonumber
     \end{equation}
 \end{frame}
 
 \section{Результаты расчётов}
-\subsection{Исходные данные}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{columns}
-        \column{.5\linewidth}
-        \begin{block}{Фьючерсы}
-            \begin{itemize}
-                \item индекс РТС (SPFB.RTS)
-                \item ПАО {<<Газпром>>} (SPFB.GAZR)
-                \item ПАО {<<Сбербанк>>} (SPFB.SBRF)
-                \item ПАО ГМК {<<Норильский Никель>>} (SPFB.GMKR)
-            \end{itemize}
-        \end{block}
-        \column{.5\linewidth}
-        \begin{figure}
-            \centering
-            \includegraphics[height=0.6\paperheight]{Histogram.pdf}
-            \caption{Гистограммы лог-доходностей активов}
-        \end{figure}
-    \end{columns}
-\end{frame}
+%\begin{frame}{\insertsection}
+%    \framesubtitle{\insertsubsection}
+%    \begin{columns}
+%        \column{.5\linewidth}
+%        \begin{block}{Фьючерсы}
+%            \begin{itemize}
+%                \item индекс РТС (SPFB.RTS)
+%                \item ПАО {<<Газпром>>} (SPFB.GAZR)
+%                \item ПАО {<<Сбербанк>>} (SPFB.SBRF)
+%                \item ПАО ГМК {<<Норильский Никель>>} (SPFB.GMKR)
+%            \end{itemize}
+%        \end{block}
+%        \column{.5\linewidth}
+%        \begin{figure}
+%            \centering
+%            \includegraphics[height=0.6\paperheight]{Histogram.pdf}
+%            \caption{Гистограммы лог-доходностей активов}
+%        \end{figure}
+%    \end{columns}
+%\end{frame}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{table}
-        \centering
-        \caption{Описательные  характеристики логарифмических доходностей}
-        \begin{adjustbox}{max width=\textwidth}
-        \begin{tabular}{l|cc|rrrr}
-            \toprule
-            \multirow{2}{*}{Активы} & \multicolumn{2}{c|}{Моменты} & \multicolumn{4}{c}{$\tau$ Кендалла} \\
-            & $\mu$ & $\sigma$ & \multicolumn{1}{c}{RTS} & \multicolumn{1}{c}{SBRF} & \multicolumn{1}{c}{GAZR} & \multicolumn{1}{c}{GMKR} \\ 
-            \midrule
-    RTS  &  0.00075 & 0.016 &     1 & 0.515 & 0.444 & 0.218 \\
-    SBRF &  0.00154 & 0.016 & 0.515 &     1 & 0.364 & 0.208 \\
-    GAZR & -0.00001 & 0.013 & 0.444 & 0.364 &     1 & 0.256 \\
-    GMKR &  0.00033 & 0.015 & 0.218 & 0.208 & 0.256 &     1 \\    
-            \bottomrule
-        \end{tabular}
-        \end{adjustbox}
-    \end{table}
-\end{frame}
+%\subsection{Оценка параметров копул}
 
-\subsection{Оценка параметров маргинальных распределений}
+%\begin{frame}{\insertsection}
+%    \framesubtitle{Получение псевдо-наблюдений}
+%    \begin{figure}
+%        \centering
+%        \includegraphics[height=0.6\paperheight]{pobs.png}
+%        \caption{Парные графики наблюдений (слева) и псевдо-наблюдений (справа)}
+%    \end{figure}
+%\end{frame}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{table}
-        \centering
-        \footnotesize
-        \caption{Оценка параметров маргинальных распределений}
-        \begin{tabularx}{\textwidth}
-        {>{\hsize=2.4\hsize}X >{\hsize=0.4\hsize}Y *{4}{>{\hsize=0.8\hsize}R}}
-        \hline 
-        \multicolumn{2}{c}{Распределения и параметры} & \multicolumn{1}{r}{RTS} &
-        \multicolumn{1}{r}{SBRF} & \multicolumn{1}{r}{GAZR} &
-        \multicolumn{1}{r}{GMKR} \\ 
-        \hline
-        \multirow{4}{*}{\parbox{\hsize}{Гиперболическое\\ распределение}}
-            &    $\pi$ &    0.00336 &    0.06100 &    0.06751 &    0.03301 \\
-            &  $\zeta$ &    0.68417 &    0.80977 &    0.73310 &    3.31449 \\
-            & $\delta$ &    0.00694	&    0.00823 &    0.00609 &    0.02232 \\
-            &    $\mu$ &    0.00067 & $-$0.00003 & $-$0.00139 & $-$0.00076 \\ \hline
-        \multirow{4}{*}{\parbox{\hsize}{Устойчивое распределение}}
-            & $\alpha$ &    1.53561 &    1.56414 &    1.86326 &    1.92994 \\
-            &  $\beta$ &    0.21114 &    0.22262 &    0.85066 &    0.66465 \\
-            & $\gamma$ &    0.00884 &    0.00926 &    0.00770 &    0.00999 \\
-            & $\delta$ &    0.00020 &    0.00063 & $-$0.00099 & $-$0.00016 \\ \hline
-        \multirow{4}{*}{\parbox{\hsize}{Распределение Мейкснера}}
-            & $\alpha$ &    0.03306 &    0.03064 &    0.02642 &    0.00428 \\
-            &  $\beta$ &    0.30800 &    0.45599 &    0.22236 &    0.87412 \\
-            & $\delta$ &    0.44168 &    0.51881 &    0.47397 &   18.31193 \\
-            &    $\mu$ & $-$0.00099 & $-$0.00173 & $-$0.00143 & $-$0.03615 \\ \hline
-        \end{tabularx}
-    \end{table}
-\end{frame}
+%\subsection{Результаты оптимизации}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{table}
-    \centering
-    \caption{Значения $p$-value статистических тестов для распределений-кандидатов}
-    \label{tab:margintest}
-    \begin{tabularx}{\textwidth}
-    {>{\hsize=1.6\hsize}X >{\hsize=1.6\hsize}X *{4}{>{\hsize=0.7\hsize}Y}}
-    \toprule
-    \multicolumn{1}{c}{Тест} & \multicolumn{1}{c}{Распределение} & RTS & SBRF & GAZR & GMKR \bigstrut \\ \midrule[1pt]
-    \multirow{3}{*}{\parbox{\hsize}{Колмогорова\,--\,Смирнова}}
-        & Гиперболическое & 0.91 & 0.88 & 1.00 & 0.79 \\
-        & Устойчивое      & 0.89 & 0.94 & 0.87 & 0.94 \\
-        & Мейкснера       & 0.99 & 0.95 & 1.00 & 0.96 \\ \midrule
-    \multirow{3}{*}{\parbox{\hsize}{Андерсона\,--\,Дарлинга}}
-        & Гиперболическое & 0.88 & 0.94 & 1.00 & 0.93 \\
-        & Устойчивое      & 0.73 & 0.87 & 0.47 & 0.97 \\
-        & Мейкснера       & 0.87 & 0.92 & 1.00 & 0.90 \\ \midrule
-    \multirow{3}{*}{\parbox{\hsize}{Крамера\,--\,фон~Мизеса}}
-        & Гиперболическое & 0.94 & 0.89 & 1.00 & 0.90 \\
-        & Устойчивое      & 0.97 & 0.92 & 0.94 & 0.98 \\
-        & Мейкснера       & 0.99\cellcolor{gray!33} & 0.95\cellcolor{gray!33} & 1.00\cellcolor{gray!33} & 0.98\cellcolor{gray!33} \\ \bottomrule
-    \end{tabularx}
-    \end{table}
-\end{frame}
+%\begin{frame}{\insertsection}
+%    \framesubtitle{\insertsubsection}
+%    \begin{table}
+%        \caption{Сравнение риск-метрик равновесного и оптимального портфеля, полученных методом исторического моделирования} \label{tab:eqw-optim}
+%        \centering
+%        \setlength{\tabcolsep}{5pt}
+%        \begin{tabularx}{0.8\textwidth}
+%        {Y *{3}{R@{\ /\ }X}}
+%        \toprule
+%    \multirow{2}{*}{$\alpha$, \%} & \multicolumn{6}{c}{$\textit{VaR}_\alpha$ / $\textit{CVaR}_\alpha$, %$\times 10^{-2}$} \\ \cmidrule{2-7} 
+%    & \multicolumn{2}{c}{Оптимальный} & \multicolumn{2}{c}{Равновесный} & \multicolumn{2}{c}{Смещение, $\times 10^{-2}$} \\ \midrule
+%    90.0 & $1.31$ & $2.01$ & $1.32$ & $2.14$ & $0.01$ & $0.13$ \\ 
+%    95.0 & $1.69$ & $2.48$ & $1.82$ & $2.74$ & $0.13$ & $0.25$ \\ 
+%    99.0 & $2.59$ & $3.96$ & $2.79$ & $4.36$ & $0.21$ & $0.41$ \\ 
+%    99.5 & $3.63$ & $5.22$ & $4.05$ & $5.50$ & $0.43$ & $0.28$ \\ 
+%   99.9 & $5.62$ & $5.86$ & $6.05$ & $6.29$ & $0.44$ & $0.43$ \\ 
+%    \bottomrule
+%        \end{tabularx}
+%    \end{table}
+%\end{frame}
 
-\subsection{Оценка параметров копул}
+%\begin{frame}{\insertsection}
+%    \framesubtitle{\insertsubsection}
+%    \begin{table}
+%    \centering
+%    \caption{Значение эмпирической $\widehat{\textit{VaR}}$ и оценённой риск-метрики $\textit{VaR}^{est}$ c изпользованмием Гауссовой\,/\,Стьюдента\,/\,R-vine копул}
+%    \label{tab:var}
+%    \setlength{\tabcolsep}{5pt}
+%    \begin{adjustbox}{max width=\textwidth}
+%    \begin{tabularx}{\textwidth}{>{\hsize=0.8\hsize}Y|>{\hsize=1.2\hsize}Y 
+%    *{2}{|>{\setlength{\hsize}{0.4\hsize}}R
+%    *{2}{@{\,/\,}>{\setlength{\hsize}{0.4\hsize}}R}}}
+%    \toprule
+%    \multicolumn{1}{c|}{$\alpha$, \%} & \multicolumn{1}{c|}{$\widehat{\textit{VaR}}$, $\times 10^{-2}$} & \multicolumn{3}{c|}{$\textit{VaR}^{est}$, $\times 10^{-2}$} & \multicolumn{3}{c}{$\Delta$, $\times 10^{-3}$} \bigstrut[t] \\ \midrule
+%    90.0   & $1.31$ & $1.57$ & $1.71$ & $1.51$ & $2.55$ & $3.94$ & $1.94$ \\ 
+%    95.0   & $1.69$ & $2.15$ & $2.37$ & $1.94$ & $4.56$ & $6.81$ & $2.48$ \\ 
+%    99.0   & $2.59$ & $3.28$ & $3.64$ & $3.28$ & $6.95$ & $10.54$ & $6.97$ \\ 
+%    99.5 & $3.63$ & $3.70$ & $4.02$ & $3.94$ & $0.69$ & $3.95$ & $3.13$ \\ 
+%    99.9 & $5.62$ & $5.63$ & $5.83$ & $6.01$ & $0.12$ & $2.18$ & $3.90$ \\ \bottomrule
+%    \end{tabularx}
+%    \end{adjustbox}
+%    \end{table}
+%\end{frame}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{Получение псевдо-наблюдений}
-    \begin{figure}
-        \centering
-        \includegraphics[height=0.6\paperheight]{pobs.png}
-        \caption{Парные графики наблюдений (слева) и псевдо-наблюдений (справа)}
-    \end{figure}
-\end{frame}
+%\begin{frame}{\insertsection}
+%    \framesubtitle{\insertsubsection}
+%    \begin{table}
+%    \centering
+%    \caption{Значение  эмпирической $\widehat{\textit{CVaR}}$ и оценённой риск-метрики $\textit{CVaR}^{est}$ c изпользованмием Гауссовой\,/\,Стьюдента\,/\,R-vine копул}
+%    \label{tab:es}
+%    \setlength{\tabcolsep}{5pt}
+%    \begin{adjustbox}{max width=\textwidth}
+%    \begin{tabularx}{\textwidth}{>{\hsize=0.8\hsize}Y|>{\hsize=1.2\hsize}Y 
+%    *{2}{|>{\setlength{\hsize}{0.4\hsize}}R
+%    *{2}{@{\,/\,}>{\setlength{\hsize}{0.4\hsize}}R}}}
+%    \toprule 
+%    \multicolumn{1}{c|}{$\alpha$, \%} & \multicolumn{1}{c|}{$\widehat{\textit{CVaR}}$, $\times 10^{-2}$} & \multicolumn{3}{c|}{$\textit{CVaR}^{est}$, $\times 10^{-2}$} & \multicolumn{3}{c}{$\Delta$, $\times 10^{-3}$} \bigstrut[t] \\ \midrule
+%    90.0   & $2.01$ & $2.38$ & $2.58$ & $2.32$ & $3.68$ & $5.66$ & $3.12$ \\ 
+%    95.0   & $2.48$ & $2.95$ & $3.17$ & $2.92$ & $4.65$ & $6.89$ & $4.35$ \\ 
+%    99.0   & $3.96$ & $4.25$ & $4.35$ & $4.50$ & $2.98$ & $3.94$ & $5.41$ \\ 
+%    99.5 & $5.22$ & $5.05$ & $4.95$ & $5.43$ & $-1.76$ & $-2.72$ & $2.06$ \\ 
+%    99.9 & $5.86$ & $5.81$ & $6.00$ & $6.01$ & $-0.51$ & $1.38$ & $1.51$ \\ \bottomrule
+%    \end{tabularx}
+%    \end{adjustbox}
+%    \end{table}
+%\end{frame}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Гауссова копула}
-    \begin{equation}
-        \Sigma_{Gauss} = \left(
-        \begin{array}{cccc}
-            1 & & & \\
-            0.723 & 1 & & \\
-            0.642 & 0.540 & 1 & \\
-            0.335 & 0.320 & 0.391 & 1
-        \end{array} \right),
-    \end{equation}
-    \end{block}
-    \begin{block}{$t$ копула}
-    \begin{equation} \label{tcopfit}
-        \Sigma_t = \left(
-        \begin{array}{cccc}
-            1 & & & \\
-            0.723 & 1 & & \\
-            0.642 & 0.540 & 1 & \\
-            0.335 & 0.320 & 0.391 & 1
-        \end{array} \right), \ \nu = 4.
-    \end{equation}
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Иерархическая копула}
-    \begin{enumerate}[(1)]
-        \item Дерево 1:\\
-        $c_{u_1;u_2}$ -- копула Стьюдента с параметрами $\rho=0.72$, $\nu=7.57$, $\tau=0.51$;\\
-        $c_{u_3;u_1}$ -- копула Survival BB1 (повёрнутая на $180^{\circ}$ копула Клейтона-Гумбеля) с параметрами $\theta=0.12$, $\delta=1.68$, $\tau=0.44$;\\
-        $c_{u_4;u_3}$ -- копула Survival Gumbel (повёрнутая на $180^{\circ}$ копула Гумбеля) с параметрами $\delta=1.33$, $\tau=0.25$;
-        \item Дерево 2:\\
-        $c_{u_3,u_2;u_1}$ -- копула Гумбеля с параметрами $\delta=1.1$, $\tau=0.09$;\\
-        $c_{u_4,u_1;u_3}$ -- копула Клейтона с параметрами $\delta=0.16$, $\tau=0.07$;
-        \item Дерево 3:\\
-        $c_{u_4,u_2;u_3,u_1}$ -- копула Франка с параметрами $\delta=0.54$, $\tau=0.06$.
-    \end{enumerate}
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Структура деревьев}
-    \begin{figure}
-        \centering
-        \includegraphics[height=0.5\paperheight]{Trees.png}
-        \caption{Парные графики наблюдений (слева) и псевдо-наблюдений (справа)}
-    \end{figure}
-    \end{block}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{table}
-    \centering
-    \caption{Значения статистичеческих критериев для выбранных копулярных моделей}
-    \label{tab:coptest}
-    \setlength{\tabcolsep}{8pt}
-    \begin{tabular}{lrr}
-    \toprule
-    Копула & Статистика & $p$-value \\ \midrule
-    Гауссова  & $S_n=0,034$ & 0,19 \\
-    Стьюдента & $S_n=0,391$ & 0,05 \\
-    R-vine    & $W=15,15$   & 0,95    \\ \bottomrule
-    \end{tabular}
-    \end{table}
-\end{frame}
-
-\subsection{Результаты оптимизации}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{table}
-        \caption{Сравнение риск-метрик равновесного и оптимального портфеля, полученных методом исторического моделирования} \label{tab:eqw-optim}
-        \centering
-        \setlength{\tabcolsep}{5pt}
-        \begin{tabularx}{0.8\textwidth}
-        {Y *{3}{R@{\ /\ }X}}
-        \toprule
-    \multirow{2}{*}{$\alpha$, \%} & \multicolumn{6}{c}{$\textit{VaR}_\alpha$ / $\textit{CVaR}_\alpha$, $\times 10^{-2}$} \\ \cmidrule{2-7} 
-    & \multicolumn{2}{c}{Оптимальный} & \multicolumn{2}{c}{Равновесный} & \multicolumn{2}{c}{Смещение, $\times 10^{-2}$} \\ \midrule
-    90.0 & $1.31$ & $2.01$ & $1.32$ & $2.14$ & $0.01$ & $0.13$ \\ 
-    95.0 & $1.69$ & $2.48$ & $1.82$ & $2.74$ & $0.13$ & $0.25$ \\ 
-    99.0 & $2.59$ & $3.96$ & $2.79$ & $4.36$ & $0.21$ & $0.41$ \\ 
-    99.5 & $3.63$ & $5.22$ & $4.05$ & $5.50$ & $0.43$ & $0.28$ \\ 
-    99.9 & $5.62$ & $5.86$ & $6.05$ & $6.29$ & $0.44$ & $0.43$ \\ 
-    \bottomrule
-        \end{tabularx}
-    \end{table}
-\end{frame}
-
-\subsection{Расчёт точечных оценок риск-метрик}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{table}
-    \centering
-    \caption{Значение эмпирической $\widehat{\textit{VaR}}$ и оценённой риск-метрики $\textit{VaR}^{est}$ c изпользованмием Гауссовой\,/\,Стьюдента\,/\,R-vine копул}
-    \label{tab:var}
-    \setlength{\tabcolsep}{5pt}
-    \begin{adjustbox}{max width=\textwidth}
-    \begin{tabularx}{\textwidth}{>{\hsize=0.8\hsize}Y|>{\hsize=1.2\hsize}Y 
-    *{2}{|>{\setlength{\hsize}{0.4\hsize}}R
-    *{2}{@{\,/\,}>{\setlength{\hsize}{0.4\hsize}}R}}}
-    \toprule
-    \multicolumn{1}{c|}{$\alpha$, \%} & \multicolumn{1}{c|}{$\widehat{\textit{VaR}}$, $\times 10^{-2}$} & \multicolumn{3}{c|}{$\textit{VaR}^{est}$, $\times 10^{-2}$} & \multicolumn{3}{c}{$\Delta$, $\times 10^{-3}$} \bigstrut[t] \\ \midrule
-    90.0   & $1.31$ & $1.57$ & $1.71$ & $1.51$ & $2.55$ & $3.94$ & $1.94$ \\ 
-    95.0   & $1.69$ & $2.15$ & $2.37$ & $1.94$ & $4.56$ & $6.81$ & $2.48$ \\ 
-    99.0   & $2.59$ & $3.28$ & $3.64$ & $3.28$ & $6.95$ & $10.54$ & $6.97$ \\ 
-    99.5 & $3.63$ & $3.70$ & $4.02$ & $3.94$ & $0.69$ & $3.95$ & $3.13$ \\ 
-    99.9 & $5.62$ & $5.63$ & $5.83$ & $6.01$ & $0.12$ & $2.18$ & $3.90$ \\ \bottomrule
-    \end{tabularx}
-    \end{adjustbox}
-    \end{table}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{table}
-    \centering
-    \caption{Значение  эмпирической $\widehat{\textit{CVaR}}$ и оценённой риск-метрики $\textit{CVaR}^{est}$ c изпользованмием Гауссовой\,/\,Стьюдента\,/\,R-vine копул}
-    \label{tab:es}
-    \setlength{\tabcolsep}{5pt}
-    \begin{adjustbox}{max width=\textwidth}
-    \begin{tabularx}{\textwidth}{>{\hsize=0.8\hsize}Y|>{\hsize=1.2\hsize}Y 
-    *{2}{|>{\setlength{\hsize}{0.4\hsize}}R
-    *{2}{@{\,/\,}>{\setlength{\hsize}{0.4\hsize}}R}}}
-    \toprule 
-    \multicolumn{1}{c|}{$\alpha$, \%} & \multicolumn{1}{c|}{$\widehat{\textit{CVaR}}$, $\times 10^{-2}$} & \multicolumn{3}{c|}{$\textit{CVaR}^{est}$, $\times 10^{-2}$} & \multicolumn{3}{c}{$\Delta$, $\times 10^{-3}$} \bigstrut[t] \\ \midrule
-    90.0   & $2.01$ & $2.38$ & $2.58$ & $2.32$ & $3.68$ & $5.66$ & $3.12$ \\ 
-    95.0   & $2.48$ & $2.95$ & $3.17$ & $2.92$ & $4.65$ & $6.89$ & $4.35$ \\ 
-    99.0   & $3.96$ & $4.25$ & $4.35$ & $4.50$ & $2.98$ & $3.94$ & $5.41$ \\ 
-    99.5 & $5.22$ & $5.05$ & $4.95$ & $5.43$ & $-1.76$ & $-2.72$ & $2.06$ \\ 
-    99.9 & $5.86$ & $5.81$ & $6.00$ & $6.01$ & $-0.51$ & $1.38$ & $1.51$ \\ \bottomrule
-    \end{tabularx}
-    \end{adjustbox}
-    \end{table}
-\end{frame}
-
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{figure}
-        \centering
-        \includegraphics[height=0.6\paperheight]{VaR-ES.pdf}
-        \caption{Точечные оценки риск-метрик VaR (слева) и CVaR (справа)}
-    \end{figure}
-\end{frame}
+%\begin{frame}{\insertsection}
+%    \framesubtitle{\insertsubsection}
+%    \begin{figure}
+%        \centering
+%        \includegraphics[height=0.6\paperheight]{VaR-ES.pdf}
+%        \caption{Точечные оценки риск-метрик VaR (слева) и CVaR (справа)}
+%    \end{figure}
+%\end{frame}
 
 \subsection{Расчёт интервальных оценок риск-метрик}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
+\begin{frame}{\insertsubsection}
+    \framesubtitle{VaR}
     \begin{table}
     \centering
-    \caption{Характеристики для риск-метрики VaR, полученные с использованием бутстрап-процедуры для  Гауссовой\,/\,Стьюдента\,/\,R-vine копул}
+    \caption{Характеристики для риск-метрики VaR, полученные с использованием Алгоритма~2 для  Гауссовой\,/\,Стьюдента\,/\,R-vine копул}
     \label{tab:boot-var}
     \setlength{\tabcolsep}{5pt}
     \begin{adjustbox}{max width=\textwidth}
@@ -702,11 +589,11 @@
     \end{table}
 \end{frame}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
+\begin{frame}{\insertsubsection}
+    \framesubtitle{CVaR}
     \begin{table}
     \centering
-    \caption{Характеристики для риск-метрики СVaR, полученные с использованием бутстрап-процедуры для  Гауссовой\,/\,Стьюдента\,/\,R-vine копул}
+    \caption{Характеристики для риск-метрики СVaR, полученные с использованием Алгоритма~2 для  Гауссовой\,/\,Стьюдента\,/\,R-vine копул}
     \label{tab:boot-es}
     \setlength{\tabcolsep}{5pt}
     \begin{adjustbox}{max width=\textwidth}
@@ -722,26 +609,24 @@
     \end{table}
 \end{frame}
 
-\begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
+\begin{frame}{\insertsubsection}
+    \framesubtitle{VaR и CVaR}
     \begin{figure}
         \centering
         \includegraphics[height=0.6\paperheight]{VaR-ES-Bootstrap.pdf}
-        \caption{Интервальные оценки риск-метрик VaR (слева) и CVaR (справа).\\Число итераций N = 200}
+        \caption{Интервальные оценки риск-метрик VaR (слева) и CVaR (справа).\\Число итераций $N = 200$}
     \end{figure}
 \end{frame}
 
-\subsection{Моделирование кривых риск-метрик}
-
 \begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
+    \framesubtitle{Моделирование кривой риск-метрики VaR}
     \begin{figure}
         \centering
         \includegraphics[height=0.6\paperheight]{VaRcurve.pdf}
         \caption{Смоделированные ряды VaR}
     \end{figure}
 \end{frame}
-
+\subsection{Моделирование кривой риск-метрики CVaR}
 \begin{frame}{\insertsection}
     \framesubtitle{\insertsubsection}
     \begin{figure}
@@ -752,8 +637,7 @@
 \end{frame}
 
 \begin{frame}{\insertsection}
-    \framesubtitle{\insertsubsection}
-    \begin{block}{Результаты теста Купича}
+    \framesubtitle{Результаты теста Купича}
     \begin{table}
         \centering
         \caption{Значение статистики $LR$ и $p$-value теста Купича для кривых VaR на уровне 95\%}
@@ -767,32 +651,219 @@
             R-vine & 2.17 & 0.14 \\ \bottomrule
         \end{tabular}
     \end{table}
-    \end{block}
 \end{frame}
 
-\section{Заключение}
+\section{Список публикаций студента}
 
 \begin{frame}{{}}
     \framesubtitle{\insertsection}
-    \begin{block}{Нововведения}
-        \begin{itemize}
-            \item Применение копул к коротким временным рядам.
-            \item Использование в связке с копулами маргинальных распределений, отличных от Гауссового.
-            \item Использование вещественных чисел в качестве степеней свободы.
-        \end{itemize}
-    \end{block}
-    \begin{block}{Выводы}
-        \begin{itemize}
-            \item Все используемые модели оказались консервативными на уровнях до 99\%.
-            \item Наиболее адекватной оказалась модель R-иерархической копулы.
-        \end{itemize}
-    \end{block}
+    % привести ссылки на работы, представленные на конкурсе UseR
+    \begin{enumerate}
+        \item \textbf{Смагулов Д.} (2017) \textit{Копулярные модели для оценки инвестиционного риска.} Международная XIV конференция <<Перспективы развития фундаментальных наук>>. Томск, 27 апреля 2017, Томский политехнический университет.
+        \item \textbf{Smagulov D.} and Semenov M. (2017) \textit{Portfolio Risk Assessment using Copula Models}. 5-th International Conference on Applied Research in Economics. HSE. Perm.  September 21–22, 2017 (oral report).
+    \end{enumerate}
 \end{frame}
+
+
+
+\section{Заключение}
+
+% \begin{frame}{{}}
+%     \framesubtitle{\insertsection}
+% %   \begin{block}{Нововведения}
+% %        \begin{itemize}
+% %            \item Применение копул к коротким временным рядам.
+% %            \item Использование в связке с копулами маргинальных распределений, отличных от Гауссового.
+% %            \item Использование вещественных чисел в качестве степеней свободы.
+% %        \end{itemize}
+% %    \end{block}
+% %    \begin{block}{Выводы}
+% %        \begin{itemize}
+% %            \item Все используемые модели оказались консервативными на уровнях до 99\%.
+% %            \item Наиболее адекватной оказалась модель R-иерархической копулы.
+% %        \end{itemize}
+% %    \end{block}
+% \end{frame}
+
+\begin{frame}{{}}
+    \framesubtitle{\insertsection}
+    \small
+1. В данной работе мы использовали математический аппарат копула-функций для исследования многомерной зависимости между финансовыми временными рядами и сравнения риск-метрик VaR и CVaR для управления портфелем.
+В качестве исходных данных мы использовали четыре временных ряда из дневных цен закрытия фьючерсов на индекс РТС (RTS) и обыкновенные акции ПАО <<НорНикеля>> (GMKR), ПАО <<Сбербанка>> (SBRF) и ПАО <<Газпрома>> (GAZR).
+В работе использовались наблюдения за два года: с 16 декабря 2015 по 16 декабря 2017 (504 наблюдения).
+\vskip 1ex
+2. Для оценки параметров копулярных моделей применён двухэтапный полный параметрический метод.
+Для каждого временного ряда была выполненена оценка параметров следующих четырехпараметрических распределений-кандидатов: гиперболического, устойчивого и Мейкснера.
+Стастическое тестирование оценок распределений показало удовлетворительные результаты качества полученных значений параметоров для всех распределений.
+Распределение Мейкснера выбрано в качестве маргинального для всех активов на основе результатов статистического критерия Крамера\,--\,фон~Мизеса.
+%\vskip 1ex
+\end{frame}
+
+\begin{frame}{{}}
+    \framesubtitle{\insertsection}
+    \small
+3. Далее в работе была осуществлена оценка параметров для трех копулярных моделей: Гауссовой, $t$\,--\,Стьюдента и R-иерархической.
+Оценка параметров для трех выбранных копула-моделей была произведена методом <<инверсии $\tau$ Кендалла>>.
+Выбор семейств для иерархической копулы выполнялся на основе тестов Вуонга и Кларка.
+\vskip 1ex
+4. Для выбранных активов RTS, SBRF, GAZR, GMKR был найдет оптимальный mean-CVaR-портфель с долями $\textbf{w}=\{0,050; 0,114; 0,384; 0,452\}$.
+\vskip 1ex
+5. Предложен алгоритм для расчёта точечных и интервальных оценок риск-метрик VaR и CVaR с использованием копулярных моделей, основанный на Монте-Карло моделировании.
+Данный алгоритм был также усовершенстован за счёт проведения бутстрап-процедуры, благодаря которой были получены несмещённые оценки риск-метрик, а также доверительный интервал для них.
+В результате было установлено, что исследуемые копула-модели для выбранных временных рядов перестают быть консервативными на уровне выше $99,0\%$.
+\end{frame}
+
+\begin{frame}{{}}
+    \framesubtitle{\insertsection}
+6. Как показали результаты моделирования для кривых VaR и CVaR на уровне $95\%$, все используемые копула-модели являются консервативными, причём более точно оценивает риск иерархическая копула, в то время как $t$\,--\,Стьюдента копула его переоценивает.
+Такое поведение $t$\,--\,Стьюдента копулы было ожидаемо, так как она более чувствительна к объему выборки, чем другие рассматриваемые копулы.
+% \vskip 1ex
+% Данная работа содержит три нововведения.
+% Во-первых, мы показали, что Гауссовы, Стьюдента и иерархические копулы могут быть использованы для представления многомерной зависимости в коротких временных рядах (только 504 наблюдения), в то время как применение копул изучалось только по отношению к длительным наблюдениям.
+% Во-вторых, мы использовали маргинальные распределения, отличные от нормального: гиперболическое, устойчивое и Мейкснера. Стоянов и др. рассматривают подобную задачу, используя только симметричные варианты распределений Стьюдента и устойчивого, а также обобщённое нормальное распределение.
+% В-третьих, при моделировании иерархической копулы мы допускаем использование в качестве степени свободы вещественное число.
+\end{frame}
+
+\begin{frame}{{}}
+    \framesubtitle{Conclusion}
+In the research, we have examined copula models as an approach to describe multivariate dependencies in time series and compare financial risk measures in framework of portfolio management.
+Futures closing prices of the following securities have been used as initial data:
+RTS index (RTS), Sberbank PJSC stocks (SBRF), Gazprom PJSC stocks (GAZR), MMC Norilsk Nickel PJSC (GMKR).
+Two-year period sample since December 16, 2015 to December 16, 2017 have been used in the research (504 observations).
+\vskip 1ex
+Two-stage parametric maximum likelihood estimation method have been applied to obtain copula parameters.
+Hyperbolic, stable and Meixner distribution parameters have been estimated for each time series.
+Statistical goodness-of-fit testing showed that obtained results are satisfied for each distribution. 
+According to the Crame\'r\,--\,von~Mises test, Meixner distribution have been chosen to describe all the securities time series.
+\end{frame}
+
+\begin{frame}{{}}
+    \framesubtitle{Conclusion}
+    \small
+Then, Gaussian, Student's $t$ and R-vine copula parameters have been estimated using <<inversion Kendall's $\tau$>> method.
+The tree construction and family selection have been performed via Vuong and Clarke tests.
+\vskip 1ex
+Mean-CVaR-optimal portfolio with the structure $\textbf{w}=\{0,050; 0,114; 0,384; 0,452\}$ have been constructed for the chosen assets RTS, SBRF, GAZR, GMKR respectively.
+\vskip 1ex
+We have proposed an algorithm to calculate VaR and CVaR risk measures using copula models.
+The algorithm is based on Monte-Carlo simulation modelling.
+The algorithm was improved using bootstrap procedure which allowed us to obtain the unbiased estimation of risk measures with a confident interval.
+As a result, we have realized that the explored copula models for the chosen time series stays conservative up to 99\% probability level.
+\vskip 1ex
+99\% level VaR and CVaR curve modelling results showed us that all the explored copula models are conservative. 
+The most accurate model is R-vine copula, the most aggressive one is Student's~$t$ copula.
+This behaviour of $t$ copula is expected since it is more sensitive to the amount of the sample data than the rest ones.
+\end{frame}
+
+% \begin{frame}{{}}
+%     \framesubtitle{Conclusion}
+% 99\% level VaR and CVaR curve modelling results showed us that all the explored copula models are conservative. 
+% The most accurate model is R-vine copula, the most aggressive one is Student's~$t$ copula.
+% This behaviour of $t$ copula is expected since it is more sensitive to the amount of the sample data than the rest ones.
+% % \vskip 1ex
+% % The contributions of the research are threefold. 
+% % First, we show that Gaussian and Student’s~$t$ as well as regular vine copula models can be used to represent multivariate dependencies in short financial time series (504 observations only), whereas the impact of copulas has been studied in relation to long time series. 
+
+% % Second, we use non-normal marginal four-parameter distributions: hyperbolic, stable and Meixner distributions, as the possible forms of marginal distributions. 
+% % \cite{Stoyanov2013} address this issue, but considers only the symmetric stable, the Student's~$t$, and generalized normal distributions. 
+
+% % Third, constructing the regular vine copula model allows us to use real number as the value of degrees of freedom for two-parametric copulae.
+% \end{frame}
+
 
 \section{Список использованных источников}
 
 % \begin{frame}{\insertsection}
     \bibliography{references.bib}
 % \end{frame}
+
+\section{Приложение}
+
+\subsection{Вычисление эмпирического квантиля}
+
+\begin{frame}{\insertsection}
+    \framesubtitle{\insertsubsection}
+    Пусть $\{X_{(1)}, X_{(2)}, \ldots, X_{(n)}\}$ -- упорядоченная по возрастанию выборка данных случайной величины $X$.
+    Тогда эмпирический квантиль для данной выборки на уровне вероятности $p$ будет определяться по формуле~\cite{Hyndman96}
+    \begin{equation}
+        \hat{Q} (p) = (1 - \gamma) X_{(j)} + \gamma X_{(j+1)},
+    \end{equation}
+    где 
+    \begin{itemize}
+        \item $m = 1 - p$,
+        \item $\frac{j-m}{n} \le p < \frac{j-m+1}{n}$,
+        \item $\gamma = pn + m - j$, $0 \le \gamma \le 1$,
+        \item $j = \floor{pn + m}$.
+    \end{itemize}
+\end{frame}
+
+\subsection{Тестирование качества оценки CVaR}
+
+\begin{frame}{\insertsection}
+    \framesubtitle{\insertsubsection}
+    Пусть $X$ -- случайная величина с конечным третьим моментом. 
+    Предположим, что нулевая гипотеза $$H_0: \textit{CVaR}_\alpha (X) = c, \quad c \in \mathbb{R}$$ верна,
+    тогда статистика теста 
+    \begin{equation}
+        Z = \sqrt{n(1-\alpha)} \frac{\widehat{\textit{CVaR}_\alpha}(X) - c}{\sqrt{\frac{\sum_{i=n\alpha+1}^n (X_i - \widehat{\textit{CVaR}_\alpha}(X))^2}{n(1-\alpha)} + \alpha \left(\widehat{\textit{CVaR}_\alpha}(X) - \widehat{\textit{VaR}_\alpha}(X)\right)^2}}
+        \nonumber
+    \end{equation}
+    подчиняется асимптотически нормальному распределению $N(0, 1)$~\cite{Mirtes16}.
+\end{frame}
+
+\subsection{Маргинальные распределения}
+
+\begin{frame}{\insertsection}
+    \framesubtitle{\insertsubsection}
+    Чтобы отразить такие свойства финансовых временных рядов, как \textit{тяжёлые хвосты} или \textit{асимметрия}, для описания лог-доходностей в качестве кандидатов были выбраны следующие маргинальные распределения:
+    \begin{itemize}
+        \item гиперболическое;
+        \item устойчивое;
+        \item Мейкснера.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\insertsection}
+    \framesubtitle{Гиперболическое распределение}
+    Функция плотности гиперболического распределения \cite{Barndoff1983}:
+    \begin{equation}
+        f_H(x|\pi,\zeta,\delta,\mu) = \frac{1}{2 \sqrt{1+\pi^2} K_1(\zeta)} e^{-\zeta \left[ \sqrt{1+\pi^2} \sqrt{1 + \big( \frac{x - \mu}{\delta})^2} - \pi \frac{x - \mu}{\delta} \right]},
+    \end{equation}
+    где
+    \begin{itemize}
+        \item $K_1(x)$~--- модифицированная функция Бесселя третьего рода 1-го порядка~\cite{Bessel1824}, 
+        \item $\pi \in \mathbb{R}$, $\zeta > 0$, $\delta > 0$, $\mu \in \mathbb{R}$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\insertsection}
+    \framesubtitle{Устойчивое распределение}
+    Характеристическая функция устойчивого распределения~\cite{Nolan2009}:
+    \begin{eqnarray}
+        \varphi_S(x|\alpha,\beta,\gamma,\delta) &=& \exp{\left[ix\delta-|\gamma x|^\alpha \left(1 - i\beta\text{sgn}(x)\Phi(x)\right)\right]}, \\
+        \Phi(x) &=& \left\{ \begin{aligned}
+            & \left(|\gamma x|^{1-\alpha} - 1\right)\tan{\frac{\pi\alpha}{2}}, & & \alpha \ne 1, \\
+            & -\frac{2}{\pi}\log{|\gamma x|}, & & \alpha = 1,
+        \end{aligned} \right. \nonumber
+    \end{eqnarray}
+    где
+    \begin{itemize}
+        \item $\alpha \in (0;\ 2]$, $\beta \in [-1;\ 1]$, $\gamma > 0$, $\delta \in \mathbb{R}$, 
+        \item $i$~--- мнимая единица.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\insertsection}
+    \framesubtitle{Распределение Мейкснера}
+    Функция плотности распределения Мейкснера \cite{Schoutens2002}:
+    \begin{equation}
+        f_M(x|\alpha,\beta,\delta,\mu) = \frac{ \left( 2 \cos{ \frac{\beta}{2}} \right)^{2 \delta}}{2 \alpha \pi \Gamma(2 \delta)} \exp{\frac{\beta(x - \mu)}{\alpha}} \left| \Gamma \left( \delta + i \frac{x - \mu}{\alpha} \right) \right|^2,
+    \end{equation}
+    где
+    \begin{itemize}
+        \item $\Gamma(z)$~--- гамма-функция с комплексным аргументом $z$, 
+        \item $\alpha > 0$, $|\beta| < \pi$, $\delta > 0$, $\mu \in \mathbb{R}$.
+    \end{itemize}
+\end{frame}
 
 \end{document}
